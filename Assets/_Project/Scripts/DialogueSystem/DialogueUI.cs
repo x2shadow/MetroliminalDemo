@@ -7,8 +7,9 @@ public class DialogueUI : MonoBehaviour
     public GameObject playerPanel;
     public TMP_Text playerText;
 
-    public GameObject brotherPanel;
-    public TMP_Text brotherText;
+    [Header("Другой персонаж")]
+    public GameObject otherPanel;
+    public TMP_Text otherText;
 
     public float dialogueDuration = 3f;
 
@@ -17,9 +18,9 @@ public class DialogueUI : MonoBehaviour
         StartCoroutine(ShowDialogue(playerPanel, playerText, text));
     }
 
-    public void ShowBrotherDialogue(string text)
+    public void ShowOtherDialogue(string text)
     {
-        StartCoroutine(ShowDialogue(brotherPanel, brotherText, text));
+        StartCoroutine(ShowDialogue(otherPanel, otherText, text));
     }
 
     private IEnumerator ShowDialogue(GameObject panel, TMP_Text textComponent, string text)

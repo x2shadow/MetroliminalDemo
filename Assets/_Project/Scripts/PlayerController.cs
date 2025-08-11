@@ -43,6 +43,14 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 velocity;
 
+    [Header("Взаимодействие")]
+    public float interactDistance = 3f; // дальность луча
+    public LayerMask interactMask; // слои для проверки
+    public GameObject interactPromptUI; // UI-элемент "E" в Canvas
+    public DialogueRunner dialogueRunner;
+
+    private IInteractable currentInteractable;
+
     [Header("Frame Rate Settings")]
     public FPSCounter fpsCounter;
     [Tooltip("Target frame rate (-1 for unlimited)")]
@@ -101,6 +109,14 @@ public class PlayerController : MonoBehaviour
     {
         if (isInputBlocked) return;
 
+        HandleMovement();
+        HandleLook();
+        HandleInteractionRay();
+        HandleDebugKeys();
+    }
+
+    void HandleMovement()
+    {
         // Движение персонажа
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
 
@@ -124,7 +140,10 @@ public class PlayerController : MonoBehaviour
 
         // двигаем CharacterController
         characterController.Move(finalMove * Time.deltaTime);
+    }
 
+    void HandleLook()
+    {
         // Обработка обзора (поворот камеры)
         float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
         float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
@@ -133,12 +152,8 @@ public class PlayerController : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
-
-        // Дебаг-клавиши (добавить в конец метода)
-        HandleDebugKeys();
     }
 
-    
     void OnDrawGizmos()
     {
         if (isGrounded)
@@ -151,15 +166,46 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
     }
 
+    private void HandleInteractionRay()
+    {
+        currentInteractable = null;
+
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactMask))
+        {
+            currentInteractable = hit.collider.GetComponent<IInteractable>();
+
+            if (currentInteractable != null)
+            {
+                if (interactPromptUI != null && !interactPromptUI.activeSelf)
+                    interactPromptUI.SetActive(true);
+            }
+            else
+            {
+                if (interactPromptUI != null && interactPromptUI.activeSelf)
+                    interactPromptUI.SetActive(false);
+            }
+        }
+        else
+        {
+            if (interactPromptUI != null && interactPromptUI.activeSelf)
+                interactPromptUI.SetActive(false);
+        }
+    }
+
     private void OnInteract(InputAction.CallbackContext context)
     {
         if (isInputBlocked) return;
-        if (context.performed) Interact();
+        if (context.performed && currentInteractable != null)
+        {
+            currentInteractable.Interact(this);
+            //Interact();
+        }
     }
 
     private void Interact()
     {
-        //Debug.Log("Interact pressed");
+        Debug.Log("Interact pressed");
     }
 
     private void HandleDebugKeys()
