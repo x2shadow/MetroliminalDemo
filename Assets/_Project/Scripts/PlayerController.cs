@@ -46,10 +46,14 @@ public class PlayerController : MonoBehaviour
     [Header("Взаимодействие")]
     public float interactDistance = 3f; // дальность луча
     public LayerMask interactMask; // слои для проверки
+    public LayerMask obstacleMask; // слои препятствий
     public GameObject interactPromptUI; // UI-элемент "E" в Canvas
     public DialogueRunner dialogueRunner;
 
     private IInteractable currentInteractable;
+
+    [Header("Фонарик")]
+    [SerializeField] private Light flashlight;
 
     [Header("Frame Rate Settings")]
     public FPSCounter fpsCounter;
@@ -89,6 +93,7 @@ public class PlayerController : MonoBehaviour
         inputActions.Player.Look.canceled  += OnLook;
         //inputActions.Player.Click.performed += OnClick;
         inputActions.Player.Interact.performed += OnInteract;
+        inputActions.Player.Flashlight.performed += OnFlashlight;
         inputActions.Player.Pause.performed += OnPause;
     }
 
@@ -102,6 +107,7 @@ public class PlayerController : MonoBehaviour
         inputActions.Player.Look.canceled -= OnLook;
         //inputActions.Player.Click.performed -= OnClick;
         inputActions.Player.Interact.performed -= OnInteract;
+        inputActions.Player.Flashlight.performed -= OnFlashlight;
         inputActions.Player.Pause.performed -= OnPause;
     }
 
@@ -169,29 +175,20 @@ public class PlayerController : MonoBehaviour
     private void HandleInteractionRay()
     {
         currentInteractable = null;
+        interactPromptUI.SetActive(false);
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactMask | obstacleMask))
         {
             currentInteractable = hit.collider.GetComponent<IInteractable>();
 
             if (currentInteractable != null)
             {
-                if (interactPromptUI != null && !interactPromptUI.activeSelf)
-                    interactPromptUI.SetActive(true);
+                interactPromptUI.SetActive(true);
             }
-            else
-            {
-                if (interactPromptUI != null && interactPromptUI.activeSelf)
-                    interactPromptUI.SetActive(false);
-            }
-        }
-        else
-        {
-            if (interactPromptUI != null && interactPromptUI.activeSelf)
-                interactPromptUI.SetActive(false);
         }
     }
+
 
     private void OnInteract(InputAction.CallbackContext context)
     {
@@ -206,6 +203,15 @@ public class PlayerController : MonoBehaviour
     private void Interact()
     {
         Debug.Log("Interact pressed");
+    }
+
+    private void OnFlashlight(InputAction.CallbackContext context)
+    {
+        if (isInputBlocked) return;
+        if (context.performed)
+        {
+            flashlight.enabled = !flashlight.enabled;
+        }
     }
 
     private void HandleDebugKeys()
