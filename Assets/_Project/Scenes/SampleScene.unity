@@ -638,7 +638,7 @@ GameObject:
   - component: {fileID: 252428148}
   - component: {fileID: 252428150}
   - component: {fileID: 252428149}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -933,7 +933,7 @@ GameObject:
   - component: {fileID: 336718423}
   - component: {fileID: 336718425}
   - component: {fileID: 336718424}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1217,7 +1217,7 @@ GameObject:
   - component: {fileID: 388995920}
   - component: {fileID: 388995922}
   - component: {fileID: 388995921}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1520,7 +1520,7 @@ GameObject:
   - component: {fileID: 517214237}
   - component: {fileID: 517214239}
   - component: {fileID: 517214238}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1776,7 +1776,7 @@ GameObject:
   - component: {fileID: 712727609}
   - component: {fileID: 712727611}
   - component: {fileID: 712727610}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2053,7 +2053,7 @@ GameObject:
   - component: {fileID: 782756690}
   - component: {fileID: 782756692}
   - component: {fileID: 782756691}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2136,7 +2136,7 @@ GameObject:
   - component: {fileID: 783335990}
   - component: {fileID: 783335992}
   - component: {fileID: 783335991}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2434,7 +2434,7 @@ GameObject:
   - component: {fileID: 904449776}
   - component: {fileID: 904449778}
   - component: {fileID: 904449777}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (15)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2790,6 +2790,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1037911159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1037911160}
+  m_Layer: 0
+  m_Name: GroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1037911160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037911159}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1639306721}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1046389156
 GameObject:
   m_ObjectHideFlags: 0
@@ -3117,7 +3148,7 @@ GameObject:
   - component: {fileID: 1157816055}
   - component: {fileID: 1157816057}
   - component: {fileID: 1157816056}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3358,7 +3389,7 @@ GameObject:
   - component: {fileID: 1279397069}
   - component: {fileID: 1279397071}
   - component: {fileID: 1279397070}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3801,7 +3832,7 @@ GameObject:
   - component: {fileID: 1353974986}
   - component: {fileID: 1353974988}
   - component: {fileID: 1353974987}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4133,7 +4164,7 @@ GameObject:
   - component: {fileID: 1424906341}
   - component: {fileID: 1424906343}
   - component: {fileID: 1424906342}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5138,11 +5169,12 @@ Transform:
   m_GameObject: {fileID: 1639306717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.252, y: 2.5, z: 6.45}
+  m_LocalPosition: {x: -0.138, y: 2.67, z: 6.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 330585546}
+  - {fileID: 1037911160}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &1639306722
@@ -5159,13 +5191,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   mouseSensitivity: 30
-  verticalSpeed: 3
   playerCamera: {fileID: 330585545}
   pauseCanvas: {fileID: 1046389156}
   entityModel: {fileID: 919132148158855972}
   idleAnimationName: Idle
   cutsceneAnimationName: CutScene
   entityAnimation: {fileID: 1286293111}
+  groundCheck: {fileID: 1037911160}
+  groundDistance: 0.18
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 8
+  gravity: -9.81
+  isGrounded: 0
   fpsCounter: {fileID: 2118534423}
   targetFrameRate: 60
 --- !u!1 &1664165480
@@ -5629,7 +5667,7 @@ GameObject:
   - component: {fileID: 1955470045}
   - component: {fileID: 1955470047}
   - component: {fileID: 1955470046}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5914,7 +5952,7 @@ GameObject:
   - component: {fileID: 2087160231}
   - component: {fileID: 2087160233}
   - component: {fileID: 2087160232}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6078,7 +6116,8 @@ GameObject:
   - component: {fileID: 2123964660}
   - component: {fileID: 2123964662}
   - component: {fileID: 2123964661}
-  m_Layer: 0
+  - component: {fileID: 2123964663}
+  m_Layer: 3
   m_Name: TunnelLadder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6149,6 +6188,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123964659}
+  m_Mesh: {fileID: -6386599343310735734, guid: 6e30f54950ed368448a219d3879d7085, type: 3}
+--- !u!64 &2123964663
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2123964659}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -6386599343310735734, guid: 6e30f54950ed368448a219d3879d7085, type: 3}
 --- !u!1 &2126097874
 GameObject:
@@ -6362,7 +6423,7 @@ GameObject:
   - component: {fileID: 2140136204}
   - component: {fileID: 2140136206}
   - component: {fileID: 2140136205}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tunnel (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6881,7 +6942,8 @@ GameObject:
   - component: {fileID: 1682372520418204708}
   - component: {fileID: 2011579663916491891}
   - component: {fileID: 3010498867024478247}
-  m_Layer: 0
+  - component: {fileID: 3010498867024478248}
+  m_Layer: 3
   m_Name: TunnelConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7383,6 +7445,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3010498867024478248
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240886287322216635}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19812797, y: 0.26842782, z: 0}
+  m_Center: {x: -0.043758478, y: -0.13421416, z: 0.00000000834465}
 --- !u!1 &3160391798252783238
 GameObject:
   m_ObjectHideFlags: 0
@@ -7522,7 +7605,8 @@ GameObject:
   - component: {fileID: 7543788890155212129}
   - component: {fileID: 8580687523326623696}
   - component: {fileID: 6400841107138114256}
-  m_Layer: 0
+  - component: {fileID: 8580687523326623697}
+  m_Layer: 3
   m_Name: Tunnel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7691,7 +7775,8 @@ GameObject:
   - component: {fileID: 697257775712081747}
   - component: {fileID: 4027703589494705881}
   - component: {fileID: 7647644867040513455}
-  m_Layer: 0
+  - component: {fileID: 7647644867040513456}
+  m_Layer: 3
   m_Name: TunnelPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8222,7 +8307,8 @@ GameObject:
   - component: {fileID: 9008382845006235630}
   - component: {fileID: 789186223867502415}
   - component: {fileID: 238684191601470454}
-  m_Layer: 0
+  - component: {fileID: 9008382845006235631}
+  m_Layer: 3
   m_Name: Train
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8680,6 +8766,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7647644867040513456
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3865464998080338050}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.019901117, y: 0.0894754, z: 0.0171683}
+  m_Center: {x: 0.035587046, y: -0.0447377, z: 0.0085841445}
 --- !u!4 &7727488969241433108
 Transform:
   m_ObjectHideFlags: 0
@@ -8907,6 +9014,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3488690961469553739}
   m_Mesh: {fileID: -6940246184706110475, guid: 6e30f54950ed368448a219d3879d7085, type: 3}
+--- !u!65 &8580687523326623697
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3488690961469553739}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.09718098, y: 0.089475416, z: 0}
+  m_Center: {x: 0, y: -0.044737883, z: -0.000035107798}
 --- !u!4 &8593865381073974297
 Transform:
   m_ObjectHideFlags: 0
@@ -9248,6 +9376,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 543450651838743099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9008382845006235631
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6090079307208551941}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.03429741, y: 0.14782867, z: 0.013869117}
+  m_Center: {x: 0, y: -0.004214616, z: 0.008661581}
 --- !u!1 &9134175104917403975
 GameObject:
   m_ObjectHideFlags: 0

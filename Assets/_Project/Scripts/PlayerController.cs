@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,11 +8,9 @@ public class PlayerController : MonoBehaviour
     [Header("Настройки движения")]
     public float moveSpeed = 5f;
     public float mouseSensitivity = 30f;
-    public float verticalSpeed = 3f;
 
     private Vector2 moveInput;
     private Vector2 lookInput;
-    private float   verticalInput;
 
     private CharacterController characterController;
     public Camera playerCamera;
@@ -33,6 +32,15 @@ public class PlayerController : MonoBehaviour
     public string cutsceneAnimationName = "CutScene";
     public Animation entityAnimation;
     private bool isEntityVisible = true;
+
+    [Header("Physics / Ground check")]
+    public Transform groundCheck;
+    public float groundDistance = 0.18f;
+    [SerializeField] LayerMask groundMask;
+    public float gravity = -9.81f;
+    public bool isGrounded = false;
+
+    private Vector3 velocity;
 
     [Header("Frame Rate Settings")]
     public FPSCounter fpsCounter;
@@ -68,12 +76,10 @@ public class PlayerController : MonoBehaviour
         // Подписка на события для экшенов
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Move.canceled  += OnMove;
-        inputActions.Player.Vertical.performed += OnVertical;
-        inputActions.Player.Vertical.canceled  += OnVertical;
         inputActions.Player.Look.performed += OnLook;
         inputActions.Player.Look.canceled  += OnLook;
         //inputActions.Player.Click.performed += OnClick;
-        //inputActions.Player.Interact.performed += OnInteract;
+        inputActions.Player.Interact.performed += OnInteract;
         inputActions.Player.Pause.performed += OnPause;
     }
 
@@ -83,12 +89,10 @@ public class PlayerController : MonoBehaviour
         // Отписка от событий
         inputActions.Player.Move.performed -= OnMove;
         inputActions.Player.Move.canceled -= OnMove;
-        inputActions.Player.Vertical.performed -= OnVertical;
-        inputActions.Player.Vertical.canceled  -= OnVertical;
         inputActions.Player.Look.performed -= OnLook;
         inputActions.Player.Look.canceled -= OnLook;
         //inputActions.Player.Click.performed -= OnClick;
-        //inputActions.Player.Interact.performed -= OnInteract;
+        inputActions.Player.Interact.performed -= OnInteract;
         inputActions.Player.Pause.performed -= OnPause;
     }
 
@@ -98,7 +102,27 @@ public class PlayerController : MonoBehaviour
 
         // Движение персонажа
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
-        characterController.Move(move * moveSpeed * Time.deltaTime);
+
+        // Проверка земли
+        if (groundCheck != null)
+            isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        else
+            isGrounded = characterController.isGrounded;
+
+        // если на земле и идёт небольшая вниз. скорость — удерживаем на небольшом значении, чтобы персонаж "прислонялся" к земле
+        if (isGrounded && velocity.y < 0f)
+        {
+            velocity.y = -2f;
+        }
+
+        // применяем гравитацию
+        velocity.y += gravity * Time.deltaTime;
+
+        // объединяем движение
+        Vector3 finalMove = move * moveSpeed + velocity;
+
+        // двигаем CharacterController
+        characterController.Move(finalMove * Time.deltaTime);
 
         // Обработка обзора (поворот камеры)
         float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
@@ -109,23 +133,32 @@ public class PlayerController : MonoBehaviour
         playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
 
-        // Вертикальное движение (Y-ось)
-        HandleVerticalMovement();
-
         // Дебаг-клавиши (добавить в конец метода)
         HandleDebugKeys();
     }
 
-    private void HandleVerticalMovement()
+    
+    void OnDrawGizmos()
     {
-        Vector3 verticalMove = new Vector3(0, verticalInput * verticalSpeed * Time.deltaTime, 0);
-        characterController.Move(verticalMove);
+        if (isGrounded)
+        {
+            Gizmos.color = Color.green;
+            //Gizmos.DrawLine(transform.position, transform.position + Vector3.down * groundDistance);
+        }
+        else Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
     }
 
-    private void OnVertical(InputAction.CallbackContext context)
+    private void OnInteract(InputAction.CallbackContext context)
     {
         if (isInputBlocked) return;
-        verticalInput = context.ReadValue<float>();
+        if (context.performed) Interact();
+    }
+
+    private void Interact()
+    {
+        Debug.Log("Interact pressed");
     }
 
     private void HandleDebugKeys()
@@ -162,7 +195,7 @@ public class PlayerController : MonoBehaviour
 
             if (Keyboard.current.digit4Key.wasPressedThisFrame)
             {
-                fpsCounter.enabled = !fpsCounter.enabled; 
+                fpsCounter.enabled = !fpsCounter.enabled;
             }
         }
     }
