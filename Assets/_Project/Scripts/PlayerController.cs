@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public string cutsceneAnimationName = "CutScene";
     public Animation entityAnimation;
     private bool isEntityVisible = true;
+    public bool isDialogueActive;
 
     [Header("Physics / Ground check")]
     public Transform groundCheck;
@@ -158,7 +159,7 @@ public class PlayerController : MonoBehaviour
 
     private void Interact()
     {
-        Debug.Log("Interact pressed");
+        //Debug.Log("Interact pressed");
     }
 
     private void HandleDebugKeys()
