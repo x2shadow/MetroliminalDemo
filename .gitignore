@@ -91,3 +91,7 @@ Packages/packages-lock.json
 NuGet/
 .editorconfig
 omnisharp.json
+
+# Metroliminal
+/Assets/Samples
+Assets/Samples.meta
