@@ -7,14 +7,28 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Настройки движения")]
     public float moveSpeed = 5f;
-    public float mouseSensitivity = 30f;
+    public float mouseSensitivity = 1.0f;
 
     private Vector2 moveInput;
     private Vector2 lookInput;
 
     private CharacterController characterController;
+
+    [Header("Камера игрока")]
     public Camera playerCamera;
-    private float xRotation = 0f;
+    [Tooltip("The follow target set in the Cinemachine Virtual Camera that the camera will follow")]
+    public GameObject CinemachineCameraTarget;
+    [Tooltip("How far in degrees can you move the camera up")]
+    public float TopClamp = 90.0f;
+    [Tooltip("How far in degrees can you move the camera down")]
+    public float BottomClamp = -90.0f;
+    [Tooltip("Invert Y look (true = typical 'flight' invert)")]
+    public bool invertY = false;
+
+    // cinemachine
+    private float cinemachineTargetPitch;
+    private float rotationVelocity;
+    private const float threshold = 0.01f;
 
 
     [HideInInspector]
@@ -62,6 +76,18 @@ public class PlayerController : MonoBehaviour
 
     //[Tooltip("VSync count (0 = off, 1 = every VBlank, 2 = every second VBlank)")]
     //public int vSyncCount = 0;
+
+    private bool IsCurrentDeviceMouse
+    {
+        get
+        {
+            #if ENABLE_INPUT_SYSTEM
+            return inputActions.Player.Look.activeControl?.device is UnityEngine.InputSystem.Mouse;
+            #else
+            return false;
+            #endif
+        }
+    }
 
     private void Awake()
     {
@@ -116,15 +142,20 @@ public class PlayerController : MonoBehaviour
         if (isInputBlocked) return;
 
         HandleMovement();
-        HandleLook();
         HandleInteractionRay();
         HandleDebugKeys();
+    }
+
+    void LateUpdate()
+    {
+        HandleLook();
     }
 
     void HandleMovement()
     {
         // Движение персонажа
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
+        move = move.normalized; // нормализация
 
         // Проверка земли
         if (groundCheck != null)
@@ -150,14 +181,34 @@ public class PlayerController : MonoBehaviour
 
     void HandleLook()
     {
-        // Обработка обзора (поворот камеры)
-        float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
-        float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
+        // if there is an input
+        if (lookInput.sqrMagnitude >= threshold)
+        {
+            //Don't multiply mouse input by Time.deltaTime
+            float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        transform.Rotate(Vector3.up * mouseX);
+            // обработка инверсии по Y
+            float yInput = invertY ? lookInput.y : -lookInput.y;
+            
+            cinemachineTargetPitch += yInput * mouseSensitivity * deltaTimeMultiplier;
+            rotationVelocity = lookInput.x * mouseSensitivity * deltaTimeMultiplier;
+
+            // clamp our pitch rotation
+            cinemachineTargetPitch = ClampAngle(cinemachineTargetPitch, BottomClamp, TopClamp);
+
+            // Update Cinemachine camera target pitch
+            CinemachineCameraTarget.transform.localRotation = Quaternion.Euler(cinemachineTargetPitch, 0.0f, 0.0f);
+
+            // rotate the player left and right
+            transform.Rotate(Vector3.up * rotationVelocity);
+        }
+    }
+
+    private static float ClampAngle(float angle, float min, float max)
+    {
+        angle %= 360f; // нормализуем в диапазон -360...360
+        if (angle < -180f) angle += 360f; // теперь диапазон -180...180
+        return Mathf.Clamp(angle, min, max);
     }
 
     void OnDrawGizmos()
