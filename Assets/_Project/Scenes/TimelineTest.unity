@@ -5593,7 +5593,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: c76e3b386444e1a47bfd994ca3422a50, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 0
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -9611,6 +9611,11 @@ PrefabInstance:
       propertyPath: interactPromptUI
       value: 
       objectReference: {fileID: 451653941}
+    - target: {fileID: 4595275436928129796, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
+      propertyPath: crouchTransitionSpeed
+      value: 15
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
