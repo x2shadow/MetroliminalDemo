@@ -36,8 +36,8 @@ public class EntityAI : MonoBehaviour
     [Range(0f, 180f)] public float visionFov = 60f;
     [Tooltip("Уровень глаза (см выше центра transform) для Raycast")]
     public float eyeHeight = 1.2f;
-    [Tooltip("Слои, которые считаются препятствиями (стены и т.п.)")]
-    public LayerMask obstacleMask;
+    //[Tooltip("Слои, которые считаются препятствиями (стены и т.п.)")]
+    //public LayerMask obstacleMask;
 
     [Header("Hearing")]
     [Tooltip("Радиус, в котором сущность слышит шумы")]
@@ -172,7 +172,8 @@ public class EntityAI : MonoBehaviour
 
         if (Time.time >= nextChaseDashTime)
         {
-            StartDashTowards(player.position, chaseDashDistance);
+            //StartDashTowards(player.position, chaseDashDistance); // Закоментил потому что дэшиться в стены
+            StartDash(chaseDashDistance);
             nextChaseDashTime = Time.time + chaseDashInterval;
         }
 

@@ -27,6 +27,10 @@ public class PlayerController : MonoBehaviour
     //[Tooltip("Input Action Reference для Crouch (toggle).")]
     //public InputActionReference crouchActionReference;
 
+    [Header("Stealth integration")]
+    [Tooltip("PlayerStealth component (auto-find if empty)")]
+    public PlayerStealth playerStealth;
+
     private Vector2 moveInput;
     private Vector2 lookInput;
 
@@ -122,6 +126,8 @@ public class PlayerController : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         playerCamera = Camera.main;
 
+        if (playerStealth == null) playerStealth = GetComponent<PlayerStealth>();
+
         originalControllerHeight = characterController.height;
         originalControllerCenter = characterController.center;
         currentHeight = characterController.height;
@@ -206,6 +212,29 @@ public class PlayerController : MonoBehaviour
         if (isSprinting) speedMultiplier *= sprintMultiplier;
         if (isCrouching) speedMultiplier *= crouchSpeedMultiplier;
         float effectiveSpeed = moveSpeed * speedMultiplier;
+
+        // ----------------- STEALTH: обновляем уровень шума -----------------
+        if (playerStealth != null)
+        {
+            // Определяем шум по приоритету: crouch > sprint > moving > idle
+            if (isCrouching)
+            {
+                playerStealth.SetMovementNoise(PlayerStealth.MovementNoise.Crouch);
+            }
+            else if (isSprinting && move.magnitude > 0.01f)
+            {
+                playerStealth.SetMovementNoise(PlayerStealth.MovementNoise.Run);
+            }
+            else if (move.magnitude > 0.01f)
+            {
+                playerStealth.SetMovementNoise(PlayerStealth.MovementNoise.Walk);
+            }
+            else
+            {
+                playerStealth.SetMovementNoise(PlayerStealth.MovementNoise.Silent);
+            }
+        }
+        // ------------------------------------------------------------------
 
         // Проверка земли
         if (groundCheck != null)
@@ -453,6 +482,12 @@ public class PlayerController : MonoBehaviour
                 // остаться в приседе
                 isCrouching = true;
             }*/
+        }
+
+        // Обновляем PlayerStealth о том, что игрок присел/встал
+        if (playerStealth != null)
+        {
+            playerStealth.SetCrouch(isCrouching);
         }
     }
 
