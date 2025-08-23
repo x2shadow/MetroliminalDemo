@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +8,11 @@ using UnityEngine.AI;
 public class EntityAI : MonoBehaviour
 {
     public enum State { Patrol, Alerting, Chase }
+
+    [Header("Debug / tuning")]
+    [SerializeField, Tooltip("Текущее накопленное значение обнаружения (видно в инспекторе)")]
+    private float detectionValue = 0f;
+    public State currentState = State.Patrol;
 
     [Header("References")]
     [Tooltip("Player transform (auto-find by tag Player if empty)")]
@@ -48,6 +54,7 @@ public class EntityAI : MonoBehaviour
     [Header("Detection accumulation")]
     [Tooltip("Значение, при достижении которого начинается погоня")]
     public float detectionThreshold = 100f;
+    public float maxDetectionValue = 150f;
     [Tooltip("Базовое приращение detectionValue в сек. при видимости игрока")]
     public float baseDetectionPerSecond = 25f;
     [Tooltip("Скорость убывания detectionValue в сек. когда не видно")]
@@ -66,13 +73,9 @@ public class EntityAI : MonoBehaviour
     [Tooltip("Multiplier when player is fully dark (darknessLevel==2) - typically 0")]
     public float stealthLevel2Multiplier = 0f;
 
-    [Header("Debug / tuning")]
-    [SerializeField, Tooltip("Текущее накопленное значение обнаружения (видно в инспекторе)")]
-    private float detectionValue = 0f;
 
     // internals
     private NavMeshAgent agent;
-    private State currentState = State.Patrol;
     private int patrolIndex = 0;
     private float lastSeenTime = -999f;
     private Coroutine dashCoroutine;
@@ -271,6 +274,7 @@ public class EntityAI : MonoBehaviour
                 float grow = baseDetectionPerSecond * (1f + noiseMult) * stealthMult * Time.deltaTime;
                 detectionValue += grow;
                 lastSeenTime = Time.time;
+                detectionValue = Mathf.Clamp(detectionValue, 0f, maxDetectionValue);
 
                 if (detectionValue >= detectionThreshold)
                 {
