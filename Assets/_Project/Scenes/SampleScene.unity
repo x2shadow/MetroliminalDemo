@@ -4762,6 +4762,11 @@ PrefabInstance:
       objectReference: {fileID: 1046389156}
     - target: {fileID: 4595275436928129796, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
+      propertyPath: crouchHeight
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595275436928129796, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 1522124933}

@@ -9,6 +9,28 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public float mouseSensitivity = 1.0f;
 
+    [Header("Sprint / Crouch")]
+    [Tooltip("Множитель скорости при беге")]
+    public float sprintMultiplier = 1.7f;
+    [Tooltip("Множитель скорости при приседе")]
+    public float crouchSpeedMultiplier = 0.5f;
+    [Tooltip("Высота CharacterController в стоячем состоянии")]
+    public float standingHeight = 2.0f;
+    [Tooltip("Высота CharacterController в приседе")]
+    public float crouchHeight = 1.0f;
+    [Tooltip("Скорость перехода между высотами")]
+    public float crouchTransitionSpeed = 8f;
+    [Tooltip("Слой(ы), которые блокируют возможность встать (потолок и пр.)")]
+    public LayerMask ceilingMask;
+    //[Tooltip("Input Action Reference для Sprint (обязательно или оставьте пустым если будете управлять состоянием извне).")]
+    //public InputActionReference sprintActionReference;
+    //[Tooltip("Input Action Reference для Crouch (toggle).")]
+    //public InputActionReference crouchActionReference;
+
+    [Header("Stealth integration")]
+    [Tooltip("PlayerStealth component (auto-find if empty)")]
+    public PlayerStealth playerStealth;
+
     private Vector2 moveInput;
     private Vector2 lookInput;
 
@@ -77,15 +99,24 @@ public class PlayerController : MonoBehaviour
     //[Tooltip("VSync count (0 = off, 1 = every VBlank, 2 = every second VBlank)")]
     //public int vSyncCount = 0;
 
+    // Sprint/Crouch internal states
+    private bool isSprinting = false;
+    private bool isCrouching = false;
+    private float currentHeight;
+    private Vector3 cameraInitialLocalPos;
+    private Vector3 cameraCrouchLocalPos;
+    private float originalControllerHeight;
+    private Vector3 originalControllerCenter;
+
     private bool IsCurrentDeviceMouse
     {
         get
         {
-            #if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM
             return inputActions.Player.Look.activeControl?.device is UnityEngine.InputSystem.Mouse;
-            #else
+#else
             return false;
-            #endif
+#endif
         }
     }
 
@@ -94,6 +125,16 @@ public class PlayerController : MonoBehaviour
         inputActions = new InputActions();
         characterController = GetComponent<CharacterController>();
         playerCamera = Camera.main;
+
+        if (playerStealth == null) playerStealth = GetComponent<PlayerStealth>();
+
+        originalControllerHeight = characterController.height;
+        originalControllerCenter = characterController.center;
+        currentHeight = characterController.height;
+
+        cameraInitialLocalPos = CinemachineCameraTarget.transform.localPosition;
+        float heightDiff = Mathf.Max(0f, standingHeight - crouchHeight);
+        cameraCrouchLocalPos = cameraInitialLocalPos - new Vector3(0f, heightDiff * 0.5f, 0f);
     }
 
     void Start()
@@ -104,9 +145,9 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        #if !UNITY_EDITOR
+#if !UNITY_EDITOR
             ApplyFrameRateSettings();
-        #endif
+#endif
     }
 
     private void OnEnable()
@@ -114,13 +155,17 @@ public class PlayerController : MonoBehaviour
         inputActions.Enable();
         // Подписка на события для экшенов
         inputActions.Player.Move.performed += OnMove;
-        inputActions.Player.Move.canceled  += OnMove;
+        inputActions.Player.Move.canceled += OnMove;
         inputActions.Player.Look.performed += OnLook;
-        inputActions.Player.Look.canceled  += OnLook;
+        inputActions.Player.Look.canceled += OnLook;
         //inputActions.Player.Click.performed += OnClick;
         inputActions.Player.Interact.performed += OnInteract;
         inputActions.Player.Flashlight.performed += OnFlashlight;
         inputActions.Player.Pause.performed += OnPause;
+
+        inputActions.Player.Sprint.performed += OnSprintPerfomed;
+        inputActions.Player.Sprint.canceled  += OnSprintCanceled;
+        inputActions.Player.Crouch.performed += OnCrouch;
     }
 
     private void OnDisable()
@@ -135,6 +180,10 @@ public class PlayerController : MonoBehaviour
         inputActions.Player.Interact.performed -= OnInteract;
         inputActions.Player.Flashlight.performed -= OnFlashlight;
         inputActions.Player.Pause.performed -= OnPause;
+        
+        inputActions.Player.Sprint.performed -= OnSprintPerfomed;
+        inputActions.Player.Sprint.canceled  -= OnSprintCanceled;
+        inputActions.Player.Crouch.performed -= OnCrouch;
     }
 
     private void Update()
@@ -144,6 +193,7 @@ public class PlayerController : MonoBehaviour
         HandleMovement();
         HandleInteractionRay();
         HandleDebugKeys();
+        HandleCrouchHeightTransition();
     }
 
     void LateUpdate()
@@ -156,6 +206,35 @@ public class PlayerController : MonoBehaviour
         // Движение персонажа
         Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
         move = move.normalized; // нормализация
+
+        // вычисляем текущую скорость с учётом Sprint/Crouch
+        float speedMultiplier = 1f;
+        if (isSprinting) speedMultiplier *= sprintMultiplier;
+        if (isCrouching) speedMultiplier *= crouchSpeedMultiplier;
+        float effectiveSpeed = moveSpeed * speedMultiplier;
+
+        // ----------------- STEALTH: обновляем уровень шума -----------------
+        if (playerStealth != null)
+        {
+            // Определяем шум по приоритету: crouch > sprint > moving > idle
+            if (isCrouching)
+            {
+                playerStealth.SetMovementNoise(PlayerStealth.MovementNoise.Crouch);
+            }
+            else if (isSprinting && move.magnitude > 0.01f)
+            {
+                playerStealth.SetMovementNoise(PlayerStealth.MovementNoise.Run);
+            }
+            else if (move.magnitude > 0.01f)
+            {
+                playerStealth.SetMovementNoise(PlayerStealth.MovementNoise.Walk);
+            }
+            else
+            {
+                playerStealth.SetMovementNoise(PlayerStealth.MovementNoise.Silent);
+            }
+        }
+        // ------------------------------------------------------------------
 
         // Проверка земли
         if (groundCheck != null)
@@ -173,7 +252,7 @@ public class PlayerController : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
 
         // объединяем движение
-        Vector3 finalMove = move * moveSpeed + velocity;
+        Vector3 finalMove = move * effectiveSpeed + velocity;
 
         // двигаем CharacterController
         characterController.Move(finalMove * Time.deltaTime);
@@ -189,7 +268,7 @@ public class PlayerController : MonoBehaviour
 
             // обработка инверсии по Y
             float yInput = invertY ? lookInput.y : -lookInput.y;
-            
+
             cinemachineTargetPitch += yInput * mouseSensitivity * deltaTimeMultiplier;
             rotationVelocity = lookInput.x * mouseSensitivity * deltaTimeMultiplier;
 
@@ -239,7 +318,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
 
     private void OnInteract(InputAction.CallbackContext context)
     {
@@ -308,10 +386,10 @@ public class PlayerController : MonoBehaviour
     {
         // Установка целевого FPS
         Application.targetFrameRate = targetFrameRate;
-        
+
         // Настройка VSync
         //QualitySettings.vSyncCount = vSyncCount;
-        
+
         //Debug.Log($"Frame rate settings applied: Target={targetFrameRate}, VSync={vSyncCount}");
     }
 
@@ -369,5 +447,75 @@ public class PlayerController : MonoBehaviour
     public void SetInputBlocked2(bool blocked)
     {
         isInputBlocked = blocked;
+    }
+    
+    private void OnSprintPerfomed(InputAction.CallbackContext ctx)
+    {
+        if (isCrouching) return; // не бегаем в приседе
+        isSprinting = true;
+    }
+
+    private void OnSprintCanceled(InputAction.CallbackContext ctx)
+    {
+        isSprinting = false;
+    }
+
+    private void OnCrouch(InputAction.CallbackContext ctx)
+    {
+        if (!isCrouching)
+        {
+            // садимся
+            isCrouching = true;
+            isSprinting = false;
+        }
+        else
+        {
+            isCrouching = false;
+            /*
+            // пытаемся встать
+            if (CanStandUp())
+            {
+                isCrouching = false;
+            }
+            else
+            {
+                // остаться в приседе
+                isCrouching = true;
+            }*/
+        }
+
+        // Обновляем PlayerStealth о том, что игрок присел/встал
+        if (playerStealth != null)
+        {
+            playerStealth.SetCrouch(isCrouching);
+        }
+    }
+
+    private bool CanStandUp()
+    {
+        float checkRadius = 0.2f;
+        Vector3 checkCenter = transform.position + Vector3.up * (crouchHeight + 0.1f);
+        LayerMask maskToUse = (ceilingMask != 0) ? ceilingMask : obstacleMask;
+        bool blocked = Physics.CheckSphere(checkCenter, checkRadius, maskToUse);
+        return !blocked;
+    }
+
+    private void HandleCrouchHeightTransition()
+    {
+        float desiredHeight = isCrouching ? crouchHeight : standingHeight;
+        float newHeight = Mathf.Lerp(characterController.height, desiredHeight, Time.deltaTime * crouchTransitionSpeed);
+
+        // Вычисляем смещение центра относительно оригинального центра (чтобы не "тонуть" в землю)
+        float heightDeltaFromOriginal = newHeight - originalControllerHeight;
+        Vector3 newCenter = originalControllerCenter + Vector3.up * (heightDeltaFromOriginal / 2f);
+
+        characterController.height = newHeight;
+        characterController.center = newCenter;
+
+        if (CinemachineCameraTarget != null)
+        {
+            Vector3 targetCamPos = isCrouching ? cameraCrouchLocalPos : cameraInitialLocalPos;
+            CinemachineCameraTarget.transform.localPosition = Vector3.Lerp(CinemachineCameraTarget.transform.localPosition, targetCamPos, Time.deltaTime * crouchTransitionSpeed);
+        }
     }
 }
