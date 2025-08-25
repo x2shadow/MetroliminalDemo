@@ -131,6 +131,7 @@ public class CutsceneClickStarter : MonoBehaviour
         if (nextDirector != null)
         {
             currentDirector.extrapolationMode = DirectorWrapMode.None;
+            currentDirector.Stop();
             nextDirector.Play();
         }
         else

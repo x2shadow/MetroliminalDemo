@@ -186,7 +186,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d55f1974593e24b478658a14f2d3b534, type: 2}
     - {fileID: 11400000, guid: 9ce976e48d9d1bd46aa19313ddec6eb3, type: 2}
     - {fileID: 11400000, guid: 371d633cba4d1ee47acfea24d597f303, type: 2}
-    - {fileID: 0}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -256,8 +255,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-    - m_PersistentCalls:
-        m_Calls: []
 --- !u!114 &6338632076626114282
 MonoBehaviour:
   m_ObjectHideFlags: 0
