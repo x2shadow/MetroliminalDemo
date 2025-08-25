@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7903574386380899603}
   - component: {fileID: 4595275436928129796}
   - component: {fileID: 3102523834244713490}
+  - component: {fileID: 6338632076626114282}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -128,6 +129,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   mouseSensitivity: 1
+  sprintMultiplier: 1.7
+  crouchSpeedMultiplier: 0.5
+  standingHeight: 2
+  crouchHeight: 1
+  crouchTransitionSpeed: 15
+  ceilingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  playerStealth: {fileID: 0}
   playerCamera: {fileID: 0}
   CinemachineCameraTarget: {fileID: 6130646675694316278}
   TopClamp: 90
@@ -174,6 +184,9 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: bd32313cbbc76714697982fb8be371f3, type: 2}
     - {fileID: 11400000, guid: d55f1974593e24b478658a14f2d3b534, type: 2}
+    - {fileID: 11400000, guid: 9ce976e48d9d1bd46aa19313ddec6eb3, type: 2}
+    - {fileID: 11400000, guid: 371d633cba4d1ee47acfea24d597f303, type: 2}
+    - {fileID: 0}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -203,6 +216,67 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6338632076626114282}
+          m_TargetAssemblyTypeName: CutsceneClickStarter, Assembly-CSharp
+          m_MethodName: StartListening
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6338632076626114282}
+          m_TargetAssemblyTypeName: CutsceneClickStarter, Assembly-CSharp
+          m_MethodName: StopListening
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 6338632076626114282}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls: []
+--- !u!114 &6338632076626114282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066581343432293984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a76398bcf0bc494bb2325fe722446ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentDirector: {fileID: 0}
+  nextDirector: {fileID: 0}
+  clickActionReference: {fileID: 223002934679634872, guid: 1d7eebaf572e1444caa58e98073685e5,
+    type: 3}
+  playerControllerReference: {fileID: 4595275436928129796}
+  clickPromptUI: {fileID: 0}
+  stopListeningOnPlay: 1
 --- !u!1 &6130646675694316278
 GameObject:
   m_ObjectHideFlags: 0
