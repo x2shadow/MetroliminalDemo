@@ -314,6 +314,11 @@ public class PlayerController : MonoBehaviour
 
             if (currentInteractable != null)
             {
+
+                if (hit.collider.GetComponent<DoorOpened>() != null &&
+                     hit.collider.GetComponent<DoorOpened>().used) return;
+                if (hit.collider.GetComponent<DoorClosed>() != null &&
+                    hit.collider.GetComponent<DoorClosed>().used) return;
                 interactPromptUI.SetActive(true);
             }
         }
