@@ -17,7 +17,7 @@ public class CH1_Trigger1 : MonoBehaviour
         {
             hasTriggered = true;
             secondTunnelLight.SetActive(true);
-            trainDoorClosingAnimation.Play();
+            trainDoorClosingAnimation.Play("DoorClosing");
         }
     }
 }
