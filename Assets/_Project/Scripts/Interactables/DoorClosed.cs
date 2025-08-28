@@ -13,4 +13,9 @@ public class DoorClosed : MonoBehaviour, IInteractable
         player.dialogueRunner.StartDialogue(dialogueScript, 0);
         used = true;
     }
+
+    public bool GetUsed()
+    {
+        return used;
+    }
 }

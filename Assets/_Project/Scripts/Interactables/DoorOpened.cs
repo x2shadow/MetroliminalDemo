@@ -11,4 +11,9 @@ public class DoorOpened : MonoBehaviour, IInteractable
         GetComponent<Animation>().Play();
         used = true;
     }
+
+    public bool GetUsed()
+    {
+        return used;
+    }
 }
