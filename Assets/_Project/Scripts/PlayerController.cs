@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
     private float rotationVelocity;
     private const float threshold = 0.01f;
 
+    [Header("Camera Shake")]
+    public PlayerCameraShake playerCameraShake;
 
     [HideInInspector]
     public InputActions inputActions;
@@ -199,6 +201,14 @@ public class PlayerController : MonoBehaviour
     void LateUpdate()
     {
         HandleLook();
+
+        // HandleCameraShake
+        if (playerCameraShake != null)
+        {
+            Vector3 horizVel = new Vector3(characterController.velocity.x, 0f, characterController.velocity.z);
+            float maxPossibleSpeed = moveSpeed * sprintMultiplier; // можно изменить логику при желании
+            playerCameraShake.UpdateShake(horizVel, maxPossibleSpeed, isSprinting, isGrounded);
+        }
     }
 
     void HandleMovement()
