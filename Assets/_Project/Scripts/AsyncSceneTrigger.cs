@@ -9,7 +9,7 @@ public class AsyncSceneTrigger : MonoBehaviour
     [Tooltip("Имя сцены, которую нужно подгрузить аддитивно при входе в триггер.")]
     public string sceneToLoad;
 
-    [Tooltip("Имя сцены, которую нужно выгрузить после задержки (оставьте пустым - не выгружать).")]
+    [Tooltip("Имя сцены, которую нужно выгрузить перед загрузкой новой сцены (оставьте пустым - не выгружать).")]
     public string sceneToUnload;
 
     [Header("Trigger")]
@@ -17,7 +17,7 @@ public class AsyncSceneTrigger : MonoBehaviour
     public string requiredTag = "Player";
 
     [Header("Timing")]
-    [Tooltip("Задержка в секундах после загрузки сцены перед выгрузкой другой сцены.")]
+    [Tooltip("Задержка в секундах между выгрузкой старой сцены и загрузкой новой.")]
     public float delaySeconds = 1f;
 
     [Tooltip("Если true — действие выполнится только один раз.")]
@@ -52,65 +52,90 @@ public class AsyncSceneTrigger : MonoBehaviour
         if (triggerOnce && hasTriggered) return;
         if (runningCoroutine != null) return; // уже выполняется
 
-        runningCoroutine = StartCoroutine(LoadPauseUnloadCoroutine());
+        runningCoroutine = StartCoroutine(UnloadThenLoadCoroutine());
         hasTriggered = true;
     }
 
-    IEnumerator LoadPauseUnloadCoroutine()
+    IEnumerator UnloadThenLoadCoroutine()
     {
-        // Загрузка сцены (если указана)
-        if (!string.IsNullOrEmpty(sceneToLoad))
+        // 1) Выгружаем старую сцену (если указана и она загружена), кроме случая когда имена совпадают
+        if (!string.IsNullOrEmpty(sceneToUnload))
         {
-            AsyncOperation loadOp = null;
-            try
+            if (!string.IsNullOrEmpty(sceneToLoad) && sceneToUnload == sceneToLoad)
             {
-                loadOp = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogWarning($"AsyncSceneTrigger: исключение при попытке загрузить сцену '{sceneToLoad}': {ex.Message}");
-            }
-
-            if (loadOp == null)
-            {
-                Debug.LogWarning($"AsyncSceneTrigger: не удалось начать загрузку сцены '{sceneToLoad}'. Проверьте имя сцены и Build Settings.");
+                Debug.Log($"AsyncSceneTrigger: сцена для выгрузки '{sceneToUnload}' совпадает с целевой сценой загрузки — пропускаю выгрузку.");
             }
             else
             {
-                while (!loadOp.isDone)
-                    yield return null;
+                Scene existingUnload = SceneManager.GetSceneByName(sceneToUnload);
+                if (!existingUnload.isLoaded)
+                {
+                    Debug.Log($"AsyncSceneTrigger: сцена '{sceneToUnload}' не загружена — пропускаю выгрузку.");
+                }
+                else
+                {
+                    AsyncOperation unloadOp = null;
+                    try
+                    {
+                        unloadOp = SceneManager.UnloadSceneAsync(sceneToUnload);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Debug.LogWarning($"AsyncSceneTrigger: исключение при попытке выгрузить сцену '{sceneToUnload}': {ex.Message}");
+                    }
 
-                onSceneLoaded?.Invoke();
+                    if (unloadOp == null)
+                    {
+                        Debug.LogWarning($"AsyncSceneTrigger: не удалось начать выгрузку сцены '{sceneToUnload}'. Проверьте имя сцены.");
+                    }
+                    else
+                    {
+                        while (!unloadOp.isDone)
+                            yield return null;
+
+                        onSceneUnloaded?.Invoke();
+                        Debug.Log($"AsyncSceneTrigger: сцена '{sceneToUnload}' успешно выгружена.");
+                    }
+                }
             }
         }
 
-        // Пауза
+        // 2) Пауза между выгрузкой и загрузкой (может быть нулевой)
         if (delaySeconds > 0f)
             yield return new WaitForSeconds(delaySeconds);
 
-        // Выгрузка сцены (если указана)
-        if (!string.IsNullOrEmpty(sceneToUnload))
+        // 3) Загружаем новую сцену (если указана и ещё не загружена)
+        if (!string.IsNullOrEmpty(sceneToLoad))
         {
-            AsyncOperation unloadOp = null;
-            try
+            Scene existingLoad = SceneManager.GetSceneByName(sceneToLoad);
+            if (existingLoad.isLoaded)
             {
-                unloadOp = SceneManager.UnloadSceneAsync(sceneToUnload);
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogWarning($"AsyncSceneTrigger: исключение при попытке выгрузить сцену '{sceneToUnload}': {ex.Message}");
-            }
-
-            if (unloadOp == null)
-            {
-                Debug.LogWarning($"AsyncSceneTrigger: не удалось начать выгрузку сцены '{sceneToUnload}'. Проверьте имя сцены.");
+                Debug.Log($"AsyncSceneTrigger: сцена '{sceneToLoad}' уже загружена — пропускаю загрузку.");
             }
             else
             {
-                while (!unloadOp.isDone)
-                    yield return null;
+                AsyncOperation loadOp = null;
+                try
+                {
+                    loadOp = SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Additive);
+                }
+                catch (System.Exception ex)
+                {
+                    Debug.LogWarning($"AsyncSceneTrigger: исключение при попытке загрузить сцену '{sceneToLoad}': {ex.Message}");
+                }
 
-                onSceneUnloaded?.Invoke();
+                if (loadOp == null)
+                {
+                    Debug.LogWarning($"AsyncSceneTrigger: не удалось начать загрузку сцены '{sceneToLoad}'. Проверьте имя сцены и Build Settings.");
+                }
+                else
+                {
+                    while (!loadOp.isDone)
+                        yield return null;
+
+                    onSceneLoaded?.Invoke();
+                    Debug.Log($"AsyncSceneTrigger: сцена '{sceneToLoad}' успешно загружена (additive).");
+                }
             }
         }
 

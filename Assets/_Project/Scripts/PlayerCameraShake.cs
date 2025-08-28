@@ -30,6 +30,7 @@ public class PlayerCameraShake : MonoBehaviour
 
     private void Awake()
     {
+        if (vcamNoise == null) return;
         vcamNoise.AmplitudeGain = idleAmplitude;
         vcamNoise.FrequencyGain = idleFrequency;
     }
