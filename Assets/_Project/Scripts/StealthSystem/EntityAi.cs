@@ -81,6 +81,8 @@ public class EntityAI : MonoBehaviour
     private Coroutine dashCoroutine;
     private float nextPatrolDashTime = 0f;
     private float nextChaseDashTime = 0f;
+    private bool isWaitingAtPatrol = false;
+    private Coroutine patrolWaitCoroutine = null;
 
     private void Awake()
     {
@@ -133,17 +135,61 @@ public class EntityAI : MonoBehaviour
     private void PatrolUpdate()
     {
         agent.speed = patrolSpeed;
-        if (!agent.pathPending && agent.remainingDistance < 0.35f && patrolPoints.Count > 0)
+
+        if (!agent.pathPending && !isWaitingAtPatrol && patrolPoints.Count > 0 && agent.remainingDistance < 0.35f)
         {
-            patrolIndex = (patrolIndex + 1) % patrolPoints.Count;
-            MoveToNextPatrolPoint();
+            // we arrived at patrolPoints[patrolIndex]
+            Transform currentT = patrolPoints[patrolIndex];
+            PatrolPoint patrolPoint = (currentT != null) ? currentT.GetComponent<PatrolPoint>() : null;
+
+            if (patrolPoint != null && patrolPoint.type == PatrolPoint.PointType.Wait)
+            {
+
+                float wait = patrolPoint.GetWaitSeconds();
+                if (patrolWaitCoroutine != null) StopCoroutine(patrolWaitCoroutine);
+                patrolWaitCoroutine = StartCoroutine(WaitAtPatrolPoint(wait));
+                return;
+            }
+            else
+            {
+                // no wait: advance to next
+                patrolIndex = (patrolIndex + 1) % patrolPoints.Count;
+                MoveToNextPatrolPoint();
+            }
         }
 
-        if (Time.time >= nextPatrolDashTime)
+        // не дэшить, пока мы ждём на патрульной точке
+        if (!isWaitingAtPatrol && Time.time >= nextPatrolDashTime)
         {
             StartDash(patrolDashDistance);
             ScheduleNextPatrolDash();
         }
+    }
+
+    private IEnumerator WaitAtPatrolPoint(float seconds)
+    {
+        isWaitingAtPatrol = true;
+        agent.isStopped = true;
+
+        // если дэш сейчас выполняется — остановим его
+        if (dashCoroutine != null)
+        {
+            StopCoroutine(dashCoroutine);
+            dashCoroutine = null;
+        }
+
+        // Optional: здесь можно вызвать анимацию ожидания или события
+        yield return new WaitForSeconds(seconds);
+
+        agent.isStopped = false;
+        isWaitingAtPatrol = false;
+
+        // перенастроим время следующего патрульного дэша, чтобы он не случился мгновенно
+        ScheduleNextPatrolDash();
+
+        // advance and move to next
+        patrolIndex = (patrolIndex + 1) % patrolPoints.Count;
+        MoveToNextPatrolPoint();
     }
 
     private void AlertingUpdate()
