@@ -179,6 +179,7 @@ public class EntityAI : MonoBehaviour
         }
 
         // Optional: здесь можно вызвать анимацию ожидания или события
+        GetComponentInChildren<Animation>().Play("NewIdle");
         yield return new WaitForSeconds(seconds);
 
         agent.isStopped = false;
@@ -188,6 +189,7 @@ public class EntityAI : MonoBehaviour
         ScheduleNextPatrolDash();
 
         // advance and move to next
+        GetComponentInChildren<Animation>().Play("Walk");
         patrolIndex = (patrolIndex + 1) % patrolPoints.Count;
         MoveToNextPatrolPoint();
     }
@@ -374,8 +376,9 @@ public class EntityAI : MonoBehaviour
     // Start forward dash (used in patrol)
     private void StartDash(float distance)
     {
+        GetComponentInChildren<Animation>().Play("Dash");
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
-        dashCoroutine = StartCoroutine(DashForward(distance, 0.18f));
+        dashCoroutine = StartCoroutine(DashForward(distance, 0.3f)); //was 0.18f
     }
 
     // Dash towards a target position (used in chase)
@@ -421,7 +424,10 @@ public class EntityAI : MonoBehaviour
         if (currentState == State.Chase && player != null)
             agent.SetDestination(player.position);
         else if (currentState == State.Patrol)
+        {
+            GetComponentInChildren<Animation>().Play("Walk");
             MoveToNextPatrolPoint();
+        }
     }
     #endregion
 
