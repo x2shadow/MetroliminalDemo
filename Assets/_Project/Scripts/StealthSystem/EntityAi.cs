@@ -254,45 +254,60 @@ public class EntityAI : MonoBehaviour
         if (playerStealth.DarknessLevel >= 2)
             return;
 
+        // eye and target points
         Vector3 eyePos = transform.position + Vector3.up * eyeHeight;
-        Vector3 toPlayer = player.position - eyePos;
+        Vector3 playerTarget = player.position;
+        Collider playerCol = player.GetComponentInChildren<Collider>();
+        if (playerCol != null) playerTarget = playerCol.bounds.center;
+
+        Vector3 toPlayer = playerTarget - eyePos;
         float dist = toPlayer.magnitude;
+        //Debug.DrawRay(eyePos, toPlayer, Color.red);
         if (dist > visionRange) return;
 
         float angle = Vector3.Angle(transform.forward, toPlayer);
         if (angle > visionFov * 0.5f) return;
 
         Ray ray = new Ray(eyePos, toPlayer.normalized);
+
+        // Single Raycast (ignore triggers). If it hits player (or child) -> visible.
+        // If it hits something else before reaching the player -> blocked.
+        bool visible = false;
+
         if (Physics.Raycast(ray, out RaycastHit hit, visionRange))
         {
-            // If the first thing hit is the player -> visible
-            if (hit.collider.transform == player)
+            // If the first non-trigger hit is the player (or its child) -> visible
+            if (hit.collider != null && (hit.collider.transform == player || hit.collider.transform.IsChildOf(player)))
             {
-                // compute growth
-                float noiseMult = GetNoiseMultiplier(playerStealth.CurrentNoise);
-                float stealthMult = (playerStealth.DarknessLevel == 1) ? stealthLevel1Multiplier : 1f;
-                float grow = baseDetectionPerSecond * (1f + noiseMult) * stealthMult * Time.deltaTime;
-                detectionValue += grow;
-                lastSeenTime = Time.time;
-                detectionValue = Mathf.Clamp(detectionValue, 0f, maxDetectionValue);
+                visible = true;
+            }
+        }
+        else
+        {
+            // no hit at all -> nothing blocks the ray -> visible
+            visible = true;
+        }
 
-                if (detectionValue >= detectionThreshold)
-                {
-                    SetState(State.Chase);
-                }
-                else
-                {
-                    if (currentState != State.Alerting && currentState != State.Chase)
-                        SetState(State.Alerting);
-                }
-                return;
-            }
-            else
-            {
-                // hit obstacle first -> not visible. decay if needed
-                if (currentState != State.Patrol)
-                    detectionValue = Mathf.Max(0f, detectionValue - detectionDecayPerSecond * Time.deltaTime);
-            }
+        // detection logic
+        if (visible)
+        {
+            Debug.DrawRay(eyePos, toPlayer, Color.green);
+            float noiseMult = GetNoiseMultiplier(playerStealth.CurrentNoise);
+            float stealthMult = (playerStealth.DarknessLevel == 1) ? stealthLevel1Multiplier : 1f;
+            float grow = baseDetectionPerSecond * (1f + noiseMult) * stealthMult * Time.deltaTime;
+            detectionValue += grow;
+            lastSeenTime = Time.time;
+            detectionValue = Mathf.Clamp(detectionValue, 0f, maxDetectionValue);
+
+            if (detectionValue >= detectionThreshold)
+                SetState(State.Chase);
+            else if (currentState != State.Alerting && currentState != State.Chase)
+                SetState(State.Alerting);
+        }
+        else
+        {
+            if (currentState != State.Patrol)
+                detectionValue = Mathf.Max(0f, detectionValue - detectionDecayPerSecond * Time.deltaTime);
         }
     }
 

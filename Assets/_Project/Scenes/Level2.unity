@@ -8963,6 +8963,11 @@ PrefabInstance:
       objectReference: {fileID: 1008126805}
     - target: {fileID: 3115953165249485407, guid: 90c4e8e1a92569c4e99a0a5c15fef213,
         type: 3}
+      propertyPath: crouchNoiseMultiplier
+      value: -0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3115953165249485407, guid: 90c4e8e1a92569c4e99a0a5c15fef213,
+        type: 3}
       propertyPath: hearingNoiseThreshold
       value: 3
       objectReference: {fileID: 0}
@@ -14492,7 +14497,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121800328}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
