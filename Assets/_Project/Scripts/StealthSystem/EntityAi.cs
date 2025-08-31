@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EntityAI : MonoBehaviour
@@ -72,6 +73,9 @@ public class EntityAI : MonoBehaviour
     public float stealthLevel1Multiplier = 0.5f;
     [Tooltip("Multiplier when player is fully dark (darknessLevel==2) - typically 0")]
     public float stealthLevel2Multiplier = 0f;
+
+    [Header("Stealth modifiers")]
+    public bool loadScene = true;
 
 
     // internals
@@ -204,6 +208,8 @@ public class EntityAI : MonoBehaviour
             return;
         }
 
+        if (TryCatchPlayer()) return;
+
         if (detectionValue >= detectionThreshold)
         {
             SetState(State.Chase);
@@ -236,12 +242,25 @@ public class EntityAI : MonoBehaviour
                 SetState(State.Patrol);
         }
 
-        if (player != null && Vector3.Distance(transform.position, player.position) <= attackDistance)
-        {
-            OnPlayerCaught();
-        }
+        if (TryCatchPlayer()) return;
     }
     #endregion
+
+    private bool TryCatchPlayer()
+    {
+        // compute distance to player using closest point on collider if available
+        Collider playerCol = player.GetComponentInChildren<Collider>();
+        Vector3 closestPoint = (playerCol != null) ? playerCol.ClosestPoint(transform.position) : player.position;
+        float distToPlayer = Vector3.Distance(transform.position, closestPoint);
+
+        if (distToPlayer <= attackDistance)
+        {
+            OnPlayerCaught();
+            return true;
+        }
+
+        return false;
+    }
 
     private void SetState(State newState)
     {
@@ -378,7 +397,7 @@ public class EntityAI : MonoBehaviour
     {
         GetComponentInChildren<Animation>().Play("Dash");
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
-        dashCoroutine = StartCoroutine(DashForward(distance, 0.3f)); //was 0.18f
+        dashCoroutine = StartCoroutine(DashForward(distance, 0.18f));
     }
 
     // Dash towards a target position (used in chase)
@@ -459,10 +478,22 @@ public class EntityAI : MonoBehaviour
 
     #region Hooks (override or assign in inspector via other script)
     protected virtual void OnEnterPatrol() { /* stop chase VFX/SFX */ }
-    protected virtual void OnEnterAlerting() { /* subtle alert VFX */ }
+    protected virtual void OnEnterAlerting()
+    {
+        // если ждём на patrol point — прерываем ожидание
+        if (patrolWaitCoroutine != null)
+        {
+            StopCoroutine(patrolWaitCoroutine);
+            patrolWaitCoroutine = null;
+        }
+
+        /* subtle alert VFX */
+        isWaitingAtPatrol = false;
+        agent.isStopped = false;
+    }
     protected virtual void OnEnterChase() { /* start chase VFX/SFX */ }
     protected virtual void OnHeardNoise() { /* sound reaction */ }
-    protected virtual void OnPlayerCaught() { Debug.Log($"{name}: Player caught!"); }
+    protected virtual void OnPlayerCaught() { Debug.Log($"{name}: Player caught!"); if (loadScene) SceneManager.LoadScene("Level2"); } 
     protected virtual void OnDashStart() { /* play glitch VFX/SFX */ }
     protected virtual void OnDashEnd() { /* end VFX */ }
     #endregion
