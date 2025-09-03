@@ -38,6 +38,11 @@ public class EntityAI : MonoBehaviour
     public float chaseDashDistance = 3f;
     public float attackDistance = 1f;
 
+    [Header("Chase end wait")]
+    [Tooltip("Секунд ожидать перед возвратом к патрулю после завершения погони")]
+    public float chaseEndWaitSeconds = 2f;
+    public bool isWaitingAfterChase = false;
+
     [Header("Vision")]
     public float visionRange = 8f;
     [Range(0f, 180f)] public float visionFov = 60f;
@@ -74,9 +79,23 @@ public class EntityAI : MonoBehaviour
     [Tooltip("Multiplier when player is fully dark (darknessLevel==2) - typically 0")]
     public float stealthLevel2Multiplier = 0f;
 
+    [Header("Tuning: turning speeds (degrees/sec)")]
+    [Tooltip("Скорость поворота в состоянии Alerting (градусов/сек)")]
+    public float alertTurnSpeed = 120f;
+    [Tooltip("Скорость поворота в состоянии Chase (градусов/сек) — высокий чтобы 'чётко' смотреть на игрока")]
+    public float chaseTurnSpeed = 720f;
+
     [Header("Stealth modifiers")]
     public bool loadScene = true;
 
+    [Header("Animator settings")]
+    Animator animator;
+    [Tooltip("Имя триггера для idle в Animator (должен совпадать c параметром в контроллере)")]
+    public string idleTriggerName = "Idle";
+    [Tooltip("Имя boolean-параметра Walk")]
+    public string walkBoolName = "IsWalking";
+    [Tooltip("Имя триггера для Dash")]
+    public string dashTriggerName = "Dash";
 
     // internals
     private NavMeshAgent agent;
@@ -87,6 +106,12 @@ public class EntityAI : MonoBehaviour
     private float nextChaseDashTime = 0f;
     private bool isWaitingAtPatrol = false;
     private Coroutine patrolWaitCoroutine = null;
+    private Coroutine chaseEndCoroutine = null;
+
+    // animator hashes
+    private int hashWalk;
+    private int hashDash;
+    private int hashIdle;
 
     private void Awake()
     {
@@ -102,6 +127,13 @@ public class EntityAI : MonoBehaviour
 
         if (playerStealth == null && player != null)
             playerStealth = player.GetComponent<PlayerStealth>();
+
+        animator = GetComponentInChildren<Animator>();
+
+        // prepare hashes (check for empty names to avoid errors)
+        hashWalk = string.IsNullOrEmpty(walkBoolName) ? 0 : Animator.StringToHash(walkBoolName);
+        hashDash = string.IsNullOrEmpty(dashTriggerName) ? 0 : Animator.StringToHash(dashTriggerName);
+        hashIdle = string.IsNullOrEmpty(idleTriggerName) ? 0 : Animator.StringToHash(idleTriggerName);
     }
 
     private void Start()
@@ -111,6 +143,13 @@ public class EntityAI : MonoBehaviour
             MoveToNextPatrolPoint();
 
         ScheduleNextPatrolDash();
+
+        // initial animation state: idle or walk depending on patrol
+        if (animator != null)
+        {
+            SetWalking(true);
+            if (hashIdle != 0) animator.ResetTrigger(hashIdle);
+        }
     }
 
     private void Update()
@@ -139,6 +178,7 @@ public class EntityAI : MonoBehaviour
     private void PatrolUpdate()
     {
         agent.speed = patrolSpeed;
+        agent.updateRotation = true; // NavMeshAgent сам поворачивает по движению
 
         if (!agent.pathPending && !isWaitingAtPatrol && patrolPoints.Count > 0 && agent.remainingDistance < 0.35f)
         {
@@ -168,6 +208,9 @@ public class EntityAI : MonoBehaviour
             StartDash(patrolDashDistance);
             ScheduleNextPatrolDash();
         }
+
+        bool shouldWalk = agent.hasPath && !agent.isStopped && agent.remainingDistance > 0.35f;
+        SetWalking(shouldWalk);
     }
 
     private IEnumerator WaitAtPatrolPoint(float seconds)
@@ -183,7 +226,10 @@ public class EntityAI : MonoBehaviour
         }
 
         // Optional: здесь можно вызвать анимацию ожидания или события
-        GetComponentInChildren<Animation>().Play("NewIdle");
+        // go to idle
+        if (hashIdle != 0) animator.SetTrigger(hashIdle);
+        SetWalking(false);
+
         yield return new WaitForSeconds(seconds);
 
         agent.isStopped = false;
@@ -193,7 +239,7 @@ public class EntityAI : MonoBehaviour
         ScheduleNextPatrolDash();
 
         // advance and move to next
-        GetComponentInChildren<Animation>().Play("Walk");
+        SetWalking(true);
         patrolIndex = (patrolIndex + 1) % patrolPoints.Count;
         MoveToNextPatrolPoint();
     }
@@ -216,14 +262,22 @@ public class EntityAI : MonoBehaviour
             return;
         }
 
-        // в этом состоянии можно двигаться к последней известной позиции игрока
-        if (player != null)
-            agent.SetDestination(player.position);
+        // В Alerting: НЕ двигаться, НО поворачиваться к игроку
+        agent.isStopped = true;
+        RotateTowardsPlayer(alertTurnSpeed);
+
+        SetWalking(false);
+        if (hashIdle != 0) animator.SetTrigger(hashIdle);
     }
 
     private void ChaseUpdate()
     {
         agent.speed = chaseSpeed;
+
+        // Ensure agent moves, but we'll control rotation manually for precise facing
+        agent.isStopped = false;
+        agent.updateRotation = false; // отключаем автоматический поворот агента
+
         if (player != null)
             agent.SetDestination(player.position);
 
@@ -234,13 +288,45 @@ public class EntityAI : MonoBehaviour
             nextChaseDashTime = Time.time + chaseDashInterval;
         }
 
+        // В Chase: поворачиваемся чётче/быстрее к игроку (во время движения)
+        RotateTowardsPlayer(chaseTurnSpeed);
+
         // lose sight and decay detectionValue
         if (Time.time - lastSeenTime > loseSightToPatrolTime)
         {
             detectionValue = Mathf.Max(0f, detectionValue - detectionDecayPerSecond * Time.deltaTime);
+
             if (detectionValue <= 0f)
-                SetState(State.Patrol);
+            {
+                // если ещё не запущено ожидание — стартуем его и останавливаем агента
+                if (chaseEndCoroutine == null)
+                {
+                    // остановим движение и очистим путь
+                    agent.isStopped = true;
+                    isWaitingAfterChase = true;
+
+                    SetWalking(false);
+                    if (hashIdle != 0) animator.SetTrigger(hashIdle);
+
+                    chaseEndCoroutine = StartCoroutine(WaitThenReturnToPatrol(chaseEndWaitSeconds));
+                }
+            }
+            else
+            {
+                // если значение снова выросло — отменим ожидание и возобновим погоню
+                if (chaseEndCoroutine != null)
+                {
+                    StopCoroutine(chaseEndCoroutine);
+                    chaseEndCoroutine = null;
+                    isWaitingAfterChase = false;
+                    // восстановим движение (OnEnterChase вызовется при SetState, но если мы остались в Chase — явно вернуть движение)
+                    agent.isStopped = false;
+                }
+            }
         }
+
+        // while chasing and moving, play Walk
+        SetWalking(!agent.isStopped);
 
         if (TryCatchPlayer()) return;
     }
@@ -265,6 +351,15 @@ public class EntityAI : MonoBehaviour
     private void SetState(State newState)
     {
         if (currentState == newState) return;
+
+        // отменим запланированный возврат к патрулю (если есть)
+        if (chaseEndCoroutine != null)
+        {
+            StopCoroutine(chaseEndCoroutine);
+            chaseEndCoroutine = null;
+        }
+        isWaitingAfterChase = false;
+
         currentState = newState;
 
         // state hooks for VFX/SFX
@@ -395,7 +490,7 @@ public class EntityAI : MonoBehaviour
     // Start forward dash (used in patrol)
     private void StartDash(float distance)
     {
-        GetComponentInChildren<Animation>().Play("Dash");
+        animator.SetTrigger(hashDash);
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
         dashCoroutine = StartCoroutine(DashForward(distance, 0.18f));
     }
@@ -444,7 +539,7 @@ public class EntityAI : MonoBehaviour
             agent.SetDestination(player.position);
         else if (currentState == State.Patrol)
         {
-            GetComponentInChildren<Animation>().Play("Walk");
+            SetWalking(true);
             MoveToNextPatrolPoint();
         }
     }
@@ -477,8 +572,36 @@ public class EntityAI : MonoBehaviour
     #endregion
 
     #region Hooks (override or assign in inspector via other script)
-    protected virtual void OnEnterPatrol() { /* stop chase VFX/SFX */ }
+    protected virtual void OnEnterPatrol()
+    {
+        // restore NavMesh automatic rotation for patrol so it faces movement
+        agent.updateRotation = true;
+        agent.isStopped = false;
+        /* stop chase VFX/SFX */
+        SetWalking(true);
+        if (hashIdle != 0) animator.ResetTrigger(hashIdle);
+    }
     protected virtual void OnEnterAlerting()
+    {
+        // если ждём на patrol point — прерываем ожидание
+        /*if (patrolWaitCoroutine != null)
+        {
+            StopCoroutine(patrolWaitCoroutine);
+            patrolWaitCoroutine = null;
+        }*/
+
+        /* subtle alert VFX */
+        isWaitingAtPatrol = false;
+
+        // В Alerting: не двигаться, но вручную поворачиваться к игроку
+        agent.isStopped = true;
+        //agent.ResetPath();
+        agent.updateRotation = false;
+
+        SetWalking(false);
+        if (hashIdle != 0) animator.SetTrigger(hashIdle);
+    }
+    protected virtual void OnEnterChase()
     {
         // если ждём на patrol point — прерываем ожидание
         if (patrolWaitCoroutine != null)
@@ -487,16 +610,75 @@ public class EntityAI : MonoBehaviour
             patrolWaitCoroutine = null;
         }
 
-        /* subtle alert VFX */
+        /* start chase VFX/SFX */
         isWaitingAtPatrol = false;
+
+        // В погоне: позволяем двигаться, ручной поворот (чтобы смотреть прямо на игрока)
         agent.isStopped = false;
+        agent.updateRotation = false;
+
+        if (chaseEndCoroutine != null)
+        {
+            StopCoroutine(chaseEndCoroutine);
+            chaseEndCoroutine = null;
+            isWaitingAfterChase = false;
+        }
+
+        SetWalking(true);
     }
-    protected virtual void OnEnterChase() { /* start chase VFX/SFX */ }
     protected virtual void OnHeardNoise() { /* sound reaction */ }
     protected virtual void OnPlayerCaught() { Debug.Log($"{name}: Player caught!"); if (loadScene) SceneManager.LoadScene("Level2"); } 
     protected virtual void OnDashStart() { /* play glitch VFX/SFX */ }
     protected virtual void OnDashEnd() { /* end VFX */ }
     #endregion
+
+    // helper: rotate only on Y axis towards player position with given max degrees/sec
+    private void RotateTowardsPlayer(float maxDegreesPerSecond)
+    {
+        if (player == null) return;
+        Vector3 playerTarget = player.position;
+        Collider playerCol = player.GetComponentInChildren<Collider>();
+        if (playerCol != null) playerTarget = playerCol.bounds.center;
+
+        Vector3 dir = playerTarget - transform.position;
+        dir.y = 0f;
+        if (dir.sqrMagnitude < 0.0001f) return;
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, maxDegreesPerSecond * Time.deltaTime);
+    }
+
+    // Coroutine that waits then returns to patrol if still not spotting player
+    private IEnumerator WaitThenReturnToPatrol(float waitSeconds)
+    {
+        float t = 0f;
+        while (t < waitSeconds)
+        {
+            // если состояние изменилось (например снова Chase/Alerting), отменяем
+            if (currentState != State.Chase)
+            {
+                chaseEndCoroutine = null;
+                isWaitingAfterChase = false;
+                yield break;
+            }
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        // окончательно сбрасываем детекцию и возвращаемся к патрулю
+        detectionValue = 0f;
+        chaseEndCoroutine = null;
+        isWaitingAfterChase = false;
+
+        // перед переходом к патрулю можно проиграть анимацию начала патруля и т.д.
+        SetState(State.Patrol);
+    }
+
+    // helper: set walk bool safely
+    private void SetWalking(bool shouldWalk)
+    {
+        if (animator == null || hashWalk == 0) return;
+        animator.SetBool(hashWalk, shouldWalk);
+    }
 
     private void OnDrawGizmosSelected()
     {
