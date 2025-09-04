@@ -7,7 +7,7 @@ public class CH1_Trigger1 : MonoBehaviour
     private bool hasTriggered = false;      // Чтобы не запускать повторно
 
     [SerializeField] GameObject secondTunnelLight;
-    [SerializeField] Animation trainDoorClosingAnimation;
+    //[SerializeField] Animation trainDoorClosingAnimation;
 
     void OnTriggerEnter(Collider other)
     {
@@ -17,7 +17,7 @@ public class CH1_Trigger1 : MonoBehaviour
         {
             hasTriggered = true;
             secondTunnelLight.SetActive(true);
-            trainDoorClosingAnimation.Play("DoorClosing");
+            //trainDoorClosingAnimation.Play("DoorClosing");
         }
     }
 }
