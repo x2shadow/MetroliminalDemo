@@ -19516,7 +19516,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 5afcaefb857433940ae118227a7cba98, type: 2}
-  m_InitialState: 0
+  m_InitialState: 1
   m_WrapMode: 0
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
@@ -20982,7 +20982,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secondTunnelLight: {fileID: 1212438243}
-  trainDoorClosingAnimation: {fileID: 0}
 --- !u!65 &1808148946
 BoxCollider:
   m_ObjectHideFlags: 0

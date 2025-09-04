@@ -140,7 +140,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7376016878586216243}
-  - component: {fileID: 8503873713320721857}
+  - component: {fileID: 6905900832775448698}
   m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
@@ -164,24 +164,27 @@ Transform:
   - {fileID: 8421902366737915324}
   m_Father: {fileID: 4201690308127791149}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &8503873713320721857
-Animation:
+--- !u!95 &6905900832775448698
+Animator:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1401344628095860783}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 333ccd41d8be14f4a9a56bc4398cb34b, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 333ccd41d8be14f4a9a56bc4398cb34b, type: 2}
-  - {fileID: 7400000, guid: 9982292939544284fbc9c0c8a217b676, type: 2}
-  - {fileID: 7400000, guid: b0c5a7c4d8d927446a12eec81dd42b3a, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d948f88de9c7b8941902b353ac9b0b0f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1586517616689833345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1436,9 +1439,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.23
   m_Speed: 1.5
-  m_Acceleration: 8
+  m_Acceleration: 6
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 150
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -1467,19 +1470,32 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  patrolSpeed: 2
-  patrolDashIntervalMin: 3
-  patrolDashIntervalMax: 3
-  patrolDashDistance: 1.5
-  chaseSpeed: 1.5
-  chaseDashInterval: 2
-  chaseDashDistance: 3
-  attackDistance: 1
-  visionRange: 8
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  patrolSpeed: 1
+  patrolDashIntervalMin: 5
+  patrolDashIntervalMax: 8
+  patrolDashDistance: 3
+  chaseSpeed: 1
+  chaseDashInterval: 1.2
+  chaseDashDistance: 6
+  attackDistance: 0.5
+  chaseEndWaitSeconds: 2
+  isWaitingAfterChase: 0
+  visionRange: 25
   visionFov: 60
   eyeHeight: 1.75
-  hearingRadius: 4
-  hearingNoiseThreshold: 3
+  hearingRadius: 15
+  hearingNoiseThreshold: 2
   detectionThreshold: 100
   maxDetectionValue: 150
   baseDetectionPerSecond: 25
@@ -1487,10 +1503,16 @@ MonoBehaviour:
   loseSightToPatrolTime: 3
   runNoiseMultiplier: 1.5
   walkNoiseMultiplier: 1
-  crouchNoiseMultiplier: 0.4
+  crouchNoiseMultiplier: 0.3
   silentNoiseMultiplier: 0
   stealthLevel1Multiplier: 0.5
   stealthLevel2Multiplier: 0
+  alertTurnSpeed: 120
+  chaseTurnSpeed: 720
+  loadScene: 1
+  idleTriggerName: Idle
+  walkBoolName: IsWalking
+  dashTriggerName: Dash
 --- !u!1 &6060477712456075393
 GameObject:
   m_ObjectHideFlags: 0
