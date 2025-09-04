@@ -749,10 +749,16 @@ PrefabInstance:
       propertyPath: dialogueRunner
       value: 
       objectReference: {fileID: 1280572950}
+    - target: {fileID: 1053629847096742618, guid: 4027d6afa1260f347bae48a7bd058a03,
+        type: 3}
+      propertyPath: dialogueScript
+      value: 
+      objectReference: {fileID: 11400000, guid: e41c079353560d6438172724038d5cd2,
+        type: 2}
     - target: {fileID: 3992378633940082730, guid: 4027d6afa1260f347bae48a7bd058a03,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 7.17
       objectReference: {fileID: 0}
     - target: {fileID: 3992378633940082730, guid: 4027d6afa1260f347bae48a7bd058a03,
         type: 3}
@@ -762,7 +768,7 @@ PrefabInstance:
     - target: {fileID: 3992378633940082730, guid: 4027d6afa1260f347bae48a7bd058a03,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -42.27
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 3992378633940082730, guid: 4027d6afa1260f347bae48a7bd058a03,
         type: 3}
@@ -2875,6 +2881,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ebaka
+      objectReference: {fileID: 0}
+    - target: {fileID: 5811104253111734006, guid: 90c4e8e1a92569c4e99a0a5c15fef213,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

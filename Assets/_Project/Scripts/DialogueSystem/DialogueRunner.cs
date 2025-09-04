@@ -43,7 +43,10 @@ public class DialogueRunner : MonoBehaviour
         foreach (var line in script.lines)
         {
             if (line.speaker == DialogueLine.Speaker.Player)
+            {
                 playerUI.Show(line.text);
+                if (line.voiceover != null) AudioManager.Instance.PlaySound(line.voiceover);
+            }
             else
                 otherOneUI.Show(line.text);
 

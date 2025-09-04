@@ -122,6 +122,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySound(AudioClip soundClip)
+    {
+        AudioSource source = GetAvailableSoundSource();
+
+        source.clip = soundClip;
+        //source.volume = soundClip.volume * masterSoundVolume;
+        //source.pitch = soundClip.pitch;
+        source.loop = false;
+        source.Play();
+
+        if (!source.loop)
+        {
+            StartCoroutine(ReturnToPoolAfterPlay(source, soundClip.length));
+        }
+    }
+
     private System.Collections.IEnumerator ReturnToPoolAfterPlay(AudioSource source, float duration)
     {
         yield return new WaitForSeconds(duration);
