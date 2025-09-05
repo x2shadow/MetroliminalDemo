@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6dd1e3410f96104f8d1987f7d745f0b, type: 3}
   m_Name: DialogueDoorOpensWithKey
   m_EditorClassIdentifier: 
-  lines: []
+  lines:
+  - speaker: 0
+    text: "\u041E\u0442\u043A\u0440\u044B\u0432\u0430\u0435\u0442\u0441\u044F \u043A\u043B\u044E\u0447\u043E\u043C"
+    voiceover: {fileID: 0}
+    duration: 2
