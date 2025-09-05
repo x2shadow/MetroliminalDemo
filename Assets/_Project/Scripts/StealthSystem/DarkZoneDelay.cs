@@ -27,6 +27,8 @@ public class DarkZoneDelay : MonoBehaviour
     [Tooltip("Время (в сек) в течение которого зона будет ВЫКЛЮЧЕНА на каждом цикле.")]
     public float DelayOff = 3f;
 
+    public Light darkZoneLight;
+
     // Флаг работы зоны: если false — зона временно не действует (ведёт себя как darknessLevel == 0)
     private bool zoneActive = true;
 
@@ -70,9 +72,16 @@ public class DarkZoneDelay : MonoBehaviour
 
         // стартуем с включённого состояния
         zoneActive = true;
+        SetLightActive(false);
         ApplyActiveToAll();
 
         cycleCoroutine = StartCoroutine(CycleRoutine());
+
+    }
+
+    void SetLightActive(bool active)
+    {
+        if (darkZoneLight != null) darkZoneLight.enabled = active;
     }
 
     private void StopCycle()
@@ -98,6 +107,7 @@ public class DarkZoneDelay : MonoBehaviour
 
             // переключаем в выключенное состояние
             zoneActive = false;
+            SetLightActive(true);
             ClearDarknessForAll();
 
             // ожидаем DelayOff
@@ -106,6 +116,7 @@ public class DarkZoneDelay : MonoBehaviour
 
             // снова включаем и применяем для всех внутри
             zoneActive = true;
+            SetLightActive(false);
             ApplyActiveToAll();
         }
     }
@@ -236,7 +247,8 @@ public class DarkZoneDelay : MonoBehaviour
             var ps = c.GetComponentInParent<PlayerStealth>();
             if (ps != null)
             {
-                ps.SetDarknessLevel(ps.DarknessLevel - 1);
+                //ps.SetDarknessLevel(ps.DarknessLevel - 1);
+                ps.SetDarknessLevel(0);
                 continue;
             }
 
@@ -246,7 +258,8 @@ public class DarkZoneDelay : MonoBehaviour
                 var ps2 = pc.GetComponent<PlayerStealth>();
                 if (ps2 != null)
                 {
-                    ps2.SetDarknessLevel(ps2.DarknessLevel - 1);
+                    //ps2.SetDarknessLevel(ps2.DarknessLevel - 1);
+                    ps2.SetDarknessLevel(0);
                 }
                 // иначе — нет PlayerStealth, ничего не делаем
             }
