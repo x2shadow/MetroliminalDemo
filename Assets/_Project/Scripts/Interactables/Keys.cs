@@ -10,6 +10,7 @@ public class Keys : MonoBehaviour, IInteractable
     {
         if (used) return;
         Debug.Log("Ключи подняты");
+        player.hasKey = true;
         Destroy(gameObject);
         used = true;
     }

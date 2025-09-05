@@ -101,6 +101,8 @@ public class PlayerController : MonoBehaviour
     //[Tooltip("VSync count (0 = off, 1 = every VBlank, 2 = every second VBlank)")]
     //public int vSyncCount = 0;
 
+    [HideInInspector] public bool hasKey = false;
+
     // Sprint/Crouch internal states
     private bool isSprinting = false;
     private bool isCrouching = false;
