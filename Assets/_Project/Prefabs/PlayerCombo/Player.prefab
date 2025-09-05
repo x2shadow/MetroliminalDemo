@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 485756947140772328}
   - component: {fileID: 3102523834244713490}
   - component: {fileID: 6338632076626114282}
+  - component: {fileID: 4023895160065728565}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -171,6 +172,7 @@ MonoBehaviour:
   flashlight: {fileID: 0}
   fpsCounter: {fileID: 0}
   targetFrameRate: 60
+  hasKey: 0
 --- !u!114 &1235559974455741940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +226,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d55f1974593e24b478658a14f2d3b534, type: 2}
     - {fileID: 11400000, guid: 9ce976e48d9d1bd46aa19313ddec6eb3, type: 2}
     - {fileID: 11400000, guid: 371d633cba4d1ee47acfea24d597f303, type: 2}
+    - {fileID: 11400000, guid: b00cce92bf6a20c4d977704d89d05101, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -293,6 +296,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4023895160065728565}
+          m_TargetAssemblyTypeName: PlayerSignalSetPosition, Assembly-CSharp
+          m_MethodName: SetPosition
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &6338632076626114282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +329,19 @@ MonoBehaviour:
   playerControllerReference: {fileID: 4595275436928129796}
   clickPromptUI: {fileID: 0}
   stopListeningOnPlay: 1
+--- !u!114 &4023895160065728565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2066581343432293984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e220b24f90b39048905cee5973ed276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {fileID: 0}
 --- !u!1 &6130646675694316278
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,6 +9,11 @@ public class PlayerSignalSetPosition : MonoBehaviour
 
     public void SetPosition()
     {
-        transform.SetPositionAndRotation(position.position, position.rotation);
+        if (position == null)
+        {
+            position = GameObject.Find("EndPosition").transform;
+            transform.SetPositionAndRotation(position.position, position.rotation);
+        }
+        else transform.SetPositionAndRotation(position.position, position.rotation);
     }
 }
