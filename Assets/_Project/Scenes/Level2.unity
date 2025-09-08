@@ -9190,18 +9190,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: eba378c813783fc47979851f4049c695, type: 2}
+  m_Material: {fileID: 2100000, guid: 2d0abbb5a19bb7845ad912eba4e8db8f, type: 2}
   m_DrawDistance: 1000
-  m_FadeScale: 0.9
+  m_FadeScale: 1
   m_StartAngleFade: 180
   m_EndAngleFade: 180
   m_UVScale: {x: 1, y: 1}
   m_UVBias: {x: 0, y: 0}
   m_DecalLayerMask: 1
   m_ScaleMode: 0
-  m_Offset: {x: 0.15420812, y: -4.300694, z: 0.5}
-  m_Size: {x: 2.9373722, y: 11.906129, z: 1}
-  m_FadeFactor: 1
+  m_Offset: {x: -1.4487085, y: -0.381171, z: 0.5}
+  m_Size: {x: 9.252464, y: 2.6825252, z: 1}
+  m_FadeFactor: 0.8
 --- !u!4 &412197265
 Transform:
   m_ObjectHideFlags: 0
@@ -9210,13 +9210,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412197263}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6830127, y: 0.18301274, z: -0.18301274, w: 0.6830127}
-  m_LocalPosition: {x: -11.659996, y: 1.903, z: 73.89}
+  m_LocalRotation: {x: 0.31907374, y: 0.63102454, z: -0.63102454, w: 0.31907374}
+  m_LocalPosition: {x: -13.2, y: 1.903, z: 71.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 30, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -126.354}
 --- !u!1 &421807359
 GameObject:
   m_ObjectHideFlags: 0

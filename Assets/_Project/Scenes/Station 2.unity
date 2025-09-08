@@ -122,62 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: b22e33d7dd744134095e7c1f7bde362a, type: 2}
---- !u!1 &3006047
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3006049}
-  - component: {fileID: 3006048}
-  m_Layer: 0
-  m_Name: DecalTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &3006048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3006047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: eba378c813783fc47979851f4049c695, type: 2}
-  m_DrawDistance: 1000
-  m_FadeScale: 0.9
-  m_StartAngleFade: 180
-  m_EndAngleFade: 180
-  m_UVScale: {x: 1, y: 1}
-  m_UVBias: {x: 0, y: 0}
-  m_DecalLayerMask: 1
-  m_ScaleMode: 0
-  m_Offset: {x: 0.15420812, y: -4.300694, z: 0.5}
-  m_Size: {x: 2.9373722, y: 11.906129, z: 1}
-  m_FadeFactor: 1
---- !u!4 &3006049
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3006047}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.6830127, y: 0.18301274, z: -0.18301274, w: 0.6830127}
-  m_LocalPosition: {x: -11.659996, y: 1.903, z: 73.89}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: 30, z: 0}
 --- !u!1 &4104905
 GameObject:
   m_ObjectHideFlags: 0
@@ -7741,7 +7685,7 @@ PlayableDirector:
   - key: {fileID: 2945129272151360293, guid: a717cb0ad1d38ff41a5712eb1be7da9b, type: 2}
     value: {fileID: 471930807}
   - key: {fileID: 6222630054791019440, guid: a717cb0ad1d38ff41a5712eb1be7da9b, type: 2}
-    value: {fileID: 3006047}
+    value: {fileID: 1573119537}
   - key: {fileID: -7322096430762066893, guid: a717cb0ad1d38ff41a5712eb1be7da9b, type: 2}
     value: {fileID: 315726643}
   - key: {fileID: -3364310844743248090, guid: a717cb0ad1d38ff41a5712eb1be7da9b, type: 2}
@@ -32982,6 +32926,62 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569523494}
   m_Mesh: {fileID: 6349347764599635669, guid: 42ba2aaa777b9b044b377ae8a4db85f2, type: 3}
+--- !u!1 &1573119537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1573119539}
+  - component: {fileID: 1573119538}
+  m_Layer: 0
+  m_Name: DecalTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1573119538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573119537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0777d029ed3dffa4692f417d4aba19ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 2d0abbb5a19bb7845ad912eba4e8db8f, type: 2}
+  m_DrawDistance: 1000
+  m_FadeScale: 1
+  m_StartAngleFade: 180
+  m_EndAngleFade: 180
+  m_UVScale: {x: 1, y: 1}
+  m_UVBias: {x: 0, y: 0}
+  m_DecalLayerMask: 1
+  m_ScaleMode: 0
+  m_Offset: {x: -1.4487085, y: -0.381171, z: 0.5}
+  m_Size: {x: 9.252464, y: 2.6825252, z: 1}
+  m_FadeFactor: 0.8
+--- !u!4 &1573119539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1573119537}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.31907374, y: 0.63102454, z: -0.63102454, w: 0.31907374}
+  m_LocalPosition: {x: -13.2, y: 1.903, z: 71.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: -126.354}
 --- !u!1 &1581446177
 GameObject:
   m_ObjectHideFlags: 0
@@ -45481,7 +45481,7 @@ SceneRoots:
   - {fileID: 1452829631}
   - {fileID: 1914526454}
   - {fileID: 979587512}
-  - {fileID: 3006049}
+  - {fileID: 1573119539}
   - {fileID: 378563573}
   - {fileID: 1809381285}
   - {fileID: 994360074}
