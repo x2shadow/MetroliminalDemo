@@ -10,6 +10,11 @@ public class DialogueTrigger : MonoBehaviour
 
     PlayerController player;
 
+    void Awake()
+    {
+        if (dialogueRunner == null) dialogueRunner = GameObject.FindObjectOfType<DialogueRunner>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (hasTriggered) return;
