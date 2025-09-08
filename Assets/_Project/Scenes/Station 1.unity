@@ -96,7 +96,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: dec67a998b377ac4cb9eee6ad832f14c,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -5595,6 +5596,94 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1001 &372362073
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -81.6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 240.8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_Name
+      value: TunnelCurveLeftCut
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9523b66790b203f4991c218c1c89fc65,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9523b66790b203f4991c218c1c89fc65, type: 3}
 --- !u!1 &377892821
 GameObject:
   m_ObjectHideFlags: 0
@@ -18650,12 +18739,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1190024052}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -43.99999, y: 0, z: 241}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2090637158}
+  m_Father: {fileID: 1455492314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1190024054
 MeshRenderer:
@@ -23105,7 +23194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1455492314
 Transform:
   m_ObjectHideFlags: 0
@@ -23118,7 +23207,8 @@ Transform:
   m_LocalPosition: {x: -43.99999, y: 0, z: 241}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1190024053}
   m_Father: {fileID: 2090637158}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1455492315
@@ -32602,7 +32692,6 @@ Transform:
   - {fileID: 1553816747}
   - {fileID: 1700574698}
   - {fileID: 1233373862}
-  - {fileID: 1190024053}
   - {fileID: 1455492314}
   - {fileID: 17615148}
   - {fileID: 398538930}
@@ -35761,12 +35850,12 @@ GameObject:
   - component: {fileID: 7270437565894144634}
   - component: {fileID: 580293593966191182}
   m_Layer: 0
-  m_Name: TunnelCurveLeft
+  m_Name: TunnelCurveLeftOld
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &6166519133171916420
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36745,7 +36834,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8895793580120159138
 Transform:
   m_ObjectHideFlags: 0
@@ -36858,6 +36947,7 @@ SceneRoots:
   - {fileID: 2090637158}
   - {fileID: 8082677881340057863}
   - {fileID: 2191249472125905111}
+  - {fileID: 372362073}
   - {fileID: 559336996}
   - {fileID: 1477254258}
   - {fileID: 1169705569}

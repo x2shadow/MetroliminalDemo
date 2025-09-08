@@ -1045,7 +1045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &481802400
 Transform:
   m_ObjectHideFlags: 0
@@ -1556,6 +1556,8 @@ MonoBehaviour:
   darknessLevel: 2
   DelayOn: 3
   DelayOff: 3
+  flickerCount: 3
+  flickerDuration: 0.5
   darkZoneLight: {fileID: 0}
 --- !u!65 &562750537
 BoxCollider:
