@@ -27,6 +27,12 @@ public class DarkZoneDelay : MonoBehaviour
     [Tooltip("Время (в сек) в течение которого зона будет ВЫКЛЮЧЕНА на каждом цикле.")]
     public float DelayOff = 3f;
 
+    [Header("Flicker Settings")]
+    [Tooltip("Number of flickers during transition")]
+    public int flickerCount = 3;
+    [Tooltip("Duration of flicker effect in seconds")]
+    public float flickerDuration = 0.5f;
+
     public Light darkZoneLight;
 
     // Флаг работы зоны: если false — зона временно не действует (ведёт себя как darknessLevel == 0)
@@ -76,7 +82,6 @@ public class DarkZoneDelay : MonoBehaviour
         ApplyActiveToAll();
 
         cycleCoroutine = StartCoroutine(CycleRoutine());
-
     }
 
     void SetLightActive(bool active)
@@ -105,6 +110,9 @@ public class DarkZoneDelay : MonoBehaviour
             if (on > 0f) yield return new WaitForSeconds(on);
             else yield return null; // если 0 — пропускаем, но даём возможность переключиться
 
+             // Мерцание перед выключением
+            yield return StartCoroutine(FlickerRoutine(true));
+
             // переключаем в выключенное состояние
             zoneActive = false;
             SetLightActive(true);
@@ -114,11 +122,32 @@ public class DarkZoneDelay : MonoBehaviour
             if (off > 0f) yield return new WaitForSeconds(off);
             else yield return null;
 
+            // Мерцание перед включением
+            yield return StartCoroutine(FlickerRoutine(false));
+
             // снова включаем и применяем для всех внутри
             zoneActive = true;
             SetLightActive(false);
             ApplyActiveToAll();
         }
+    }
+
+    private IEnumerator FlickerRoutine(bool targetState)
+    {
+        if (darkZoneLight == null || flickerCount <= 0) yield break;
+
+        float pause = flickerDuration / (flickerCount * 2);
+        bool initialLightState = darkZoneLight.enabled;
+
+        for (int i = 0; i < flickerCount; i++)
+        {
+            darkZoneLight.enabled = !initialLightState;
+            yield return new WaitForSeconds(pause);
+            darkZoneLight.enabled = initialLightState;
+            yield return new WaitForSeconds(pause);
+        }
+
+        darkZoneLight.enabled = targetState;
     }
 
     private void OnTriggerEnter(Collider other)
