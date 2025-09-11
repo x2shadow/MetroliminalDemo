@@ -97,6 +97,15 @@ public class EntityAI : MonoBehaviour
     [Tooltip("Имя триггера для Dash")]
     public string dashTriggerName = "Dash";
 
+    // Поля для смены материалов (glitch во время дэша)
+    [Header("Dash VFX - material swap")]
+    public Material defaultMaterial;
+    [Tooltip("Material, который будет применён к объекту 'NoName' на время дэша")]
+    public Material glitchMaterial;
+
+    private SkinnedMeshRenderer noNameRenderer;
+    private bool materialsSwapped = false;
+
     // internals
     private NavMeshAgent agent;
     private int patrolIndex = 0;
@@ -134,6 +143,9 @@ public class EntityAI : MonoBehaviour
         hashWalk = string.IsNullOrEmpty(walkBoolName) ? 0 : Animator.StringToHash(walkBoolName);
         hashDash = string.IsNullOrEmpty(dashTriggerName) ? 0 : Animator.StringToHash(dashTriggerName);
         hashIdle = string.IsNullOrEmpty(idleTriggerName) ? 0 : Animator.StringToHash(idleTriggerName);
+
+        // --- Найти SkinnedMeshRenderer дочернего объекта с именем "NoName"
+        noNameRenderer = GameObject.Find("NoName").GetComponent<SkinnedMeshRenderer>();
     }
 
     private void Start()
@@ -217,6 +229,8 @@ public class EntityAI : MonoBehaviour
     {
         isWaitingAtPatrol = true;
         agent.isStopped = true;
+
+        RestoreOriginalMaterial();
 
         // если дэш сейчас выполняется — остановим его
         if (dashCoroutine != null)
@@ -536,7 +550,10 @@ public class EntityAI : MonoBehaviour
 
         // refresh path depending on state
         if (currentState == State.Chase && player != null)
+        {
+            SetWalking(true);
             agent.SetDestination(player.position);
+        }
         else if (currentState == State.Patrol)
         {
             SetWalking(true);
@@ -624,12 +641,15 @@ public class EntityAI : MonoBehaviour
             isWaitingAfterChase = false;
         }
 
+         // Убедимся, что триггер Idle не помешает включению Walk
+        if (hashIdle != 0) animator.ResetTrigger(hashIdle);
+
         SetWalking(true);
     }
     protected virtual void OnHeardNoise() { /* sound reaction */ }
     protected virtual void OnPlayerCaught() { Debug.Log($"{name}: Player caught!"); if (loadScene) SceneManager.LoadScene("Level2"); } 
-    protected virtual void OnDashStart() { /* play glitch VFX/SFX */ }
-    protected virtual void OnDashEnd() { /* end VFX */ }
+    protected virtual void OnDashStart() { ApplyGlitchMaterial(); /* play glitch VFX/SFX */ }
+    protected virtual void OnDashEnd() { RestoreOriginalMaterial();/* end VFX */ }
     #endregion
 
     // helper: rotate only on Y axis towards player position with given max degrees/sec
@@ -677,7 +697,35 @@ public class EntityAI : MonoBehaviour
     private void SetWalking(bool shouldWalk)
     {
         if (animator == null || hashWalk == 0) return;
+
+        // Если ставим ходьбу — сбрасываем триггер Idle чтобы анимация не "залипала"
+        if (shouldWalk)
+        {
+            if (hashIdle != 0) animator.ResetTrigger(hashIdle);
+        }
+
         animator.SetBool(hashWalk, shouldWalk);
+    }
+
+    // --- Методы для смены/восстановления материалов
+    private void ApplyGlitchMaterial()
+    {
+        if (noNameRenderer == null || glitchMaterial == null) return;
+        if (materialsSwapped) return;
+
+        // назначаем инстанс материалов (renderer.materials создаёт экземпляры)
+        noNameRenderer.material = glitchMaterial;
+        materialsSwapped = true;
+    }
+
+    private void RestoreOriginalMaterial()
+    {
+        if (noNameRenderer == null) return;
+        if (!materialsSwapped) return;
+
+        // восстанавливаем оригинальный массив (sharedMaterials чтобы не создавать лишние экземпляры)
+        noNameRenderer.material = defaultMaterial;
+        materialsSwapped = false;
     }
 
     private void OnDrawGizmosSelected()
