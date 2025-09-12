@@ -3,9 +3,15 @@ using UnityEngine;
 public class DialogInCutscene : MonoBehaviour
 {
     public DialogueScript dialogueScript;   // Сценарий диалога
-    public DialogueRunner dialogueRunner;   // Ссылка на DialogueRunner
 
-    public PlayerController player;
+    DialogueRunner dialogueRunner;   // Ссылка на DialogueRunner
+    PlayerController player;
+
+    void Awake()
+    {
+        if (dialogueRunner == null) dialogueRunner = GameObject.FindObjectOfType<DialogueRunner>();
+        if (player == null) player = GameObject.Find("Player").GetComponent<PlayerController>();
+    }
 
     public void StartDialogue()
     {
