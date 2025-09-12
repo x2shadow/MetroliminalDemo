@@ -128,6 +128,7 @@ public class AudioManager : MonoBehaviour
 
         source.clip = soundClip;
         //source.volume = soundClip.volume * masterSoundVolume;
+        source.volume = 1f * masterSoundVolume;
         //source.pitch = soundClip.pitch;
         source.loop = false;
         source.Play();
