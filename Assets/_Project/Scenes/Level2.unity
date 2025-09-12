@@ -19199,13 +19199,73 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Events:
     m_Signals:
-    - {fileID: 11400000, guid: 181d66c011da9d24ea2b08fd505f7aec, type: 2}
+    - {fileID: 11400000, guid: 9f58c52e04b0fc14398930d226d29ebb, type: 2}
+    - {fileID: 11400000, guid: 91a207bba242c314fa9c6b69028d4f32, type: 2}
+    - {fileID: 11400000, guid: 86222cdf68857fe4681a40796089c713, type: 2}
+    - {fileID: 11400000, guid: f5c0596b2299cd4418433ddb1647c21c, type: 2}
+    - {fileID: 11400000, guid: ab57361f743cd9e4a8c62b1fb016d449, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 842930653}
           m_TargetAssemblyTypeName: DialogInCutscene, Assembly-CSharp
-          m_MethodName: StartDialogue
+          m_MethodName: StartDialogue1
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 842930653}
+          m_TargetAssemblyTypeName: DialogInCutscene, Assembly-CSharp
+          m_MethodName: StartDialogue2
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 842930653}
+          m_TargetAssemblyTypeName: DialogInCutscene, Assembly-CSharp
+          m_MethodName: StartDialogue3
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 842930653}
+          m_TargetAssemblyTypeName: DialogInCutscene, Assembly-CSharp
+          m_MethodName: StartDialogue4
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 842930653}
+          m_TargetAssemblyTypeName: DialogInCutscene, Assembly-CSharp
+          m_MethodName: StartDialogue5
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -19227,9 +19287,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5cf5f141d4fc74e9739b6befce1125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueScript: {fileID: 11400000, guid: 5672f9ffcd18a1f438b715e0f9995911, type: 2}
-  dialogueRunner: {fileID: 29123298}
-  player: {fileID: 1008126802}
+  dialogueScript1: {fileID: 11400000, guid: cb1ce0b26a179434883a29f754c4b1c1, type: 2}
+  dialogueScript2: {fileID: 11400000, guid: 6ccb7cbc0ccd8e945a11eb46d2fb04a2, type: 2}
+  dialogueScript3: {fileID: 11400000, guid: 9d4e437e98e21fe4b986f9dc6899cffb, type: 2}
+  dialogueScript4: {fileID: 11400000, guid: b569156929fd14b4a801efd754ae176c, type: 2}
+  dialogueScript5: {fileID: 11400000, guid: 52342f8a94d43904f8db688b8661bf92, type: 2}
 --- !u!4 &842930654
 Transform:
   m_ObjectHideFlags: 0
