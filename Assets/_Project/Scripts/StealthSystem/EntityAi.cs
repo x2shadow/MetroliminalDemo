@@ -4,6 +4,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EntityAI : MonoBehaviour
@@ -96,6 +97,19 @@ public class EntityAI : MonoBehaviour
     public string walkBoolName = "IsWalking";
     [Tooltip("Имя триггера для Dash")]
     public string dashTriggerName = "Dash";
+    public string deathTriggerName = "Death";
+
+    // Поля для смены материалов (glitch во время дэша)
+    [Header("Dash VFX - material swap")]
+    public Material defaultMaterial;
+    [Tooltip("Material, который будет применён к объекту 'NoName' на время дэша")]
+    public Material glitchMaterial;
+
+    [Header("Death Cutscene")]
+    [SerializeField] PlayableDirector deathCutscene;
+
+    private SkinnedMeshRenderer noNameRenderer;
+    private bool materialsSwapped = false;
 
     // internals
     private NavMeshAgent agent;
@@ -107,11 +121,14 @@ public class EntityAI : MonoBehaviour
     private bool isWaitingAtPatrol = false;
     private Coroutine patrolWaitCoroutine = null;
     private Coroutine chaseEndCoroutine = null;
+    private bool isPlayerCaught = false;
+    private bool isInDeathCutscene = false;
 
     // animator hashes
     private int hashWalk;
     private int hashDash;
     private int hashIdle;
+    private int hashDeath;
 
     private void Awake()
     {
@@ -134,6 +151,12 @@ public class EntityAI : MonoBehaviour
         hashWalk = string.IsNullOrEmpty(walkBoolName) ? 0 : Animator.StringToHash(walkBoolName);
         hashDash = string.IsNullOrEmpty(dashTriggerName) ? 0 : Animator.StringToHash(dashTriggerName);
         hashIdle = string.IsNullOrEmpty(idleTriggerName) ? 0 : Animator.StringToHash(idleTriggerName);
+        hashDeath = string.IsNullOrEmpty(deathTriggerName) ? 0 : Animator.StringToHash(deathTriggerName);
+
+        // --- Найти SkinnedMeshRenderer дочернего объекта с именем "NoName"
+        noNameRenderer = GameObject.Find("NoName").GetComponent<SkinnedMeshRenderer>();
+        
+        if (deathCutscene != null) { deathCutscene.stopped += OnDeathCutsceneStopped; }
     }
 
     private void Start()
@@ -177,6 +200,8 @@ public class EntityAI : MonoBehaviour
     #region State updates
     private void PatrolUpdate()
     {
+        if (agent.enabled == false) return;
+
         agent.speed = patrolSpeed;
         agent.updateRotation = true; // NavMeshAgent сам поворачивает по движению
 
@@ -217,6 +242,8 @@ public class EntityAI : MonoBehaviour
     {
         isWaitingAtPatrol = true;
         agent.isStopped = true;
+
+        RestoreOriginalMaterial();
 
         // если дэш сейчас выполняется — остановим его
         if (dashCoroutine != null)
@@ -272,14 +299,16 @@ public class EntityAI : MonoBehaviour
 
     private void ChaseUpdate()
     {
+        if (agent.enabled == false) return;
+
         agent.speed = chaseSpeed;
 
         // Ensure agent moves, but we'll control rotation manually for precise facing
         agent.isStopped = false;
         agent.updateRotation = false; // отключаем автоматический поворот агента
+    
+        if (player != null) agent.SetDestination(player.position);
 
-        if (player != null)
-            agent.SetDestination(player.position);
 
         if (Time.time >= nextChaseDashTime)
         {
@@ -490,6 +519,7 @@ public class EntityAI : MonoBehaviour
     // Start forward dash (used in patrol)
     private void StartDash(float distance)
     {
+        if (isPlayerCaught || isInDeathCutscene) return;
         animator.SetTrigger(hashDash);
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
         dashCoroutine = StartCoroutine(DashForward(distance, 0.18f));
@@ -498,6 +528,7 @@ public class EntityAI : MonoBehaviour
     // Dash towards a target position (used in chase)
     private void StartDashTowards(Vector3 targetPos, float maxDistance)
     {
+        if (isPlayerCaught || isInDeathCutscene) return;
         if (dashCoroutine != null) StopCoroutine(dashCoroutine);
         Vector3 dir = (targetPos - transform.position).normalized;
         Vector3 desired = transform.position + dir * maxDistance;
@@ -526,17 +557,21 @@ public class EntityAI : MonoBehaviour
         float t = 0f;
         while (t < duration)
         {
+            if (isInDeathCutscene) { break; }
             t += Time.deltaTime;
             transform.position = Vector3.Lerp(from, to, t / duration);
             yield return null;
         }
-        transform.position = to;
+        if (!isInDeathCutscene) transform.position = to;
         OnDashEnd();
         agent.isStopped = false;
 
         // refresh path depending on state
         if (currentState == State.Chase && player != null)
+        {
+            SetWalking(true);
             agent.SetDestination(player.position);
+        }
         else if (currentState == State.Patrol)
         {
             SetWalking(true);
@@ -560,6 +595,8 @@ public class EntityAI : MonoBehaviour
     /// </summary>
     public void TriggerHeardNoise(int noiseLevel, Vector3 sourcePosition)
     {
+        if (isInDeathCutscene) return;
+
         float dist = Vector3.Distance(transform.position, sourcePosition);
         if (dist <= hearingRadius && noiseLevel >= hearingNoiseThreshold)
         {
@@ -574,6 +611,7 @@ public class EntityAI : MonoBehaviour
     #region Hooks (override or assign in inspector via other script)
     protected virtual void OnEnterPatrol()
     {
+        if (agent.enabled == false) return;
         // restore NavMesh automatic rotation for patrol so it faces movement
         agent.updateRotation = true;
         agent.isStopped = false;
@@ -624,13 +662,81 @@ public class EntityAI : MonoBehaviour
             isWaitingAfterChase = false;
         }
 
+         // Убедимся, что триггер Idle не помешает включению Walk
+        if (hashIdle != 0) animator.ResetTrigger(hashIdle);
+
         SetWalking(true);
     }
     protected virtual void OnHeardNoise() { /* sound reaction */ }
-    protected virtual void OnPlayerCaught() { Debug.Log($"{name}: Player caught!"); if (loadScene) SceneManager.LoadScene("Level2"); } 
-    protected virtual void OnDashStart() { /* play glitch VFX/SFX */ }
-    protected virtual void OnDashEnd() { /* end VFX */ }
+    protected virtual void OnPlayerCaught()
+    {
+        if (isPlayerCaught) return; // защита от повторных вызовов
+        isPlayerCaught = true;
+        isInDeathCutscene = true;
+
+        Debug.Log($"{name}: Player caught!");
+
+        player.GetComponent<MeshRenderer>().enabled = false;
+        RestoreOriginalMaterial();
+
+        // Остановим навмеш-движение и очистим все запущенные корутины/дэши
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
+
+        if (dashCoroutine != null)
+        {
+            StopCoroutine(dashCoroutine);
+            dashCoroutine = null;
+        }
+        if (patrolWaitCoroutine != null)
+        {
+            StopCoroutine(patrolWaitCoroutine);
+            patrolWaitCoroutine = null;
+        }
+        if (chaseEndCoroutine != null)
+        {
+            StopCoroutine(chaseEndCoroutine);
+            chaseEndCoroutine = null;
+        }
+
+        // Заблокируем дальнейшие дэши
+        nextPatrolDashTime = float.MaxValue;
+        nextChaseDashTime = float.MaxValue;
+
+        // Остановим анимации ходьбы/дэша и включим death-триггер
+        SetWalking(false);
+        if (hashDash != 0) animator.ResetTrigger(hashDash);
+        if (hashIdle != 0) animator.ResetTrigger(hashIdle);
+        if (hashDeath != 0) animator.SetTrigger(hashDeath);
+
+        // Play cutscene (если есть) — по завершении события OnDeathCutsceneStopped загрузится Level2
+        if (deathCutscene != null)
+        {
+            deathCutscene.Play();
+        }
+        else
+        {
+            // fallback: если катсцены нет — загрузить сцену сразу
+            if (loadScene) SceneManager.LoadScene("Level2");
+        }
+    }
+    protected virtual void OnDashStart() { ApplyGlitchMaterial(); /* play glitch VFX/SFX */ }
+    protected virtual void OnDashEnd() { RestoreOriginalMaterial();/* end VFX */ }
     #endregion
+
+    private void OnDeathCutsceneStopped(PlayableDirector playableDirector)
+    {
+        // safety: убедимся, что этот вызов относится к нашей cutscene
+        if (playableDirector != deathCutscene) return;
+
+        // Загрузка Level2 (если разрешена)
+        if (loadScene)
+        {
+            SceneManager.LoadScene("Level2");
+        }
+    }
 
     // helper: rotate only on Y axis towards player position with given max degrees/sec
     private void RotateTowardsPlayer(float maxDegreesPerSecond)
@@ -677,7 +783,35 @@ public class EntityAI : MonoBehaviour
     private void SetWalking(bool shouldWalk)
     {
         if (animator == null || hashWalk == 0) return;
+
+        // Если ставим ходьбу — сбрасываем триггер Idle чтобы анимация не "залипала"
+        if (shouldWalk)
+        {
+            if (hashIdle != 0) animator.ResetTrigger(hashIdle);
+        }
+
         animator.SetBool(hashWalk, shouldWalk);
+    }
+
+    // --- Методы для смены/восстановления материалов
+    private void ApplyGlitchMaterial()
+    {
+        if (noNameRenderer == null || glitchMaterial == null) return;
+        if (materialsSwapped) return;
+
+        // назначаем инстанс материалов (renderer.materials создаёт экземпляры)
+        noNameRenderer.material = glitchMaterial;
+        materialsSwapped = true;
+    }
+
+    private void RestoreOriginalMaterial()
+    {
+        if (noNameRenderer == null) return;
+        if (!materialsSwapped) return;
+
+        // восстанавливаем оригинальный массив (sharedMaterials чтобы не создавать лишние экземпляры)
+        noNameRenderer.material = defaultMaterial;
+        materialsSwapped = false;
     }
 
     private void OnDrawGizmosSelected()
