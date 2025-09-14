@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6dd1e3410f96104f8d1987f7d745f0b, type: 3}
-  m_Name: DialogueDoorOpensWithKey
+  m_Name: Gate4
   m_EditorClassIdentifier: 
   lines:
   - speaker: 0
-    text: "\u0411\u0435\u0437 \u043A\u043B\u044E\u0447\u0430 \u043C\u043D\u0435 \u0442\u0443\u0442
-      \u043D\u0435 \u043F\u0440\u043E\u0439\u0442\u0438."
+    text: "\u041D\u0435\u043B\u044C\u0437\u044F \u0443\u043F\u0443\u0441\u0442\u0438\u0442\u044C
+      \u043F\u043E\u0435\u0437\u0434!"
     voiceover: {fileID: 0}
-    duration: 2
+    duration: 3
