@@ -11164,10 +11164,11 @@ GameObject:
   - component: {fileID: 728170043}
   - component: {fileID: 728170047}
   - component: {fileID: 728170046}
-  - component: {fileID: 728170045}
   - component: {fileID: 728170044}
+  - component: {fileID: 728170049}
+  - component: {fileID: 728170048}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11202,27 +11203,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueScript: {fileID: 11400000, guid: 07284ae4ac67a34429e8df196652ddfb, type: 2}
   used: 0
---- !u!65 &728170045
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 728170042}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &728170046
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -11273,6 +11253,48 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 728170042}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &728170048
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728170042}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.045929667, y: 0.6911369, z: 0.7364775}
+  m_Center: {x: -0.43832877, y: -0.0025163, z: 0.13176139}
+--- !u!65 &728170049
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728170042}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.031020783, y: 1, z: 0.7038571}
+  m_Center: {x: 0.45813066, y: 0.0000014289243, z: 0.103078745}
 --- !u!1 &734041638
 GameObject:
   m_ObjectHideFlags: 0
@@ -11895,7 +11917,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 753325012}
-  - component: {fileID: 753325011}
   m_Layer: 0
   m_Name: S1Signs
   m_TagString: Untagged
@@ -11903,20 +11924,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &753325011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 753325010}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0963675a63cc3e49bc4811b8cade156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueScript: {fileID: 11400000, guid: 07284ae4ac67a34429e8df196652ddfb, type: 2}
-  used: 0
 --- !u!4 &753325012
 Transform:
   m_ObjectHideFlags: 0
@@ -20172,7 +20179,6 @@ GameObject:
   - component: {fileID: 1269279943}
   - component: {fileID: 1269279945}
   - component: {fileID: 1269279944}
-  - component: {fileID: 1269279946}
   m_Layer: 0
   m_Name: Tablo (2)
   m_TagString: Untagged
@@ -20245,27 +20251,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269279942}
   m_Mesh: {fileID: 6026812860588610702, guid: 9e09a75e83bdbb64fae9285231a4ba33, type: 3}
---- !u!65 &1269279946
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269279942}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.19999999, y: 2.3598528, z: 4.138673}
-  m_Center: {x: 0, y: 0, z: -0.25296026}
 --- !u!1 &1269997211
 GameObject:
   m_ObjectHideFlags: 0
