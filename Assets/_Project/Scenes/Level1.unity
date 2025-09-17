@@ -7435,7 +7435,7 @@ PrefabInstance:
         type: 3}
       propertyPath: vcamNoise
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 989421379}
     - target: {fileID: 2066581343432293984, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
       propertyPath: m_Name
@@ -11205,6 +11205,18 @@ Transform:
   - {fileID: 1078530435}
   m_Father: {fileID: 45108082}
   m_LocalEulerAnglesHint: {x: -51.58379, y: -1.7179574, z: -0.16042353}
+--- !u!114 &989421379 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1655555028083080147, guid: 89c6d6e7cfc5ee14ebe889d396e130e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 167883567}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &989973849
 GameObject:
   m_ObjectHideFlags: 0
@@ -11217,6 +11229,7 @@ GameObject:
   - component: {fileID: 989973850}
   - component: {fileID: 989973853}
   - component: {fileID: 989973852}
+  - component: {fileID: 989973854}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -11291,6 +11304,25 @@ MonoBehaviour:
   widthPixelation: 512
   heightPixelation: 256
   colorPrecision: 16
+--- !u!114 &989973854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 989973849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0e352078a3f9a347bd7f02247db4e01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 989973850}
+  playerStealth: {fileID: 1254836922}
+  intensityDefault: 0.2
+  intensityHidden: 0.3
+  intensityFullyHidden: 0.35
+  fadeSpeed: 0.5
+  smoothness: 0.5
 --- !u!1 &998003425
 GameObject:
   m_ObjectHideFlags: 0
