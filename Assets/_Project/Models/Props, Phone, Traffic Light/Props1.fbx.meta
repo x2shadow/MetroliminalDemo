@@ -3,7 +3,17 @@ guid: af7a81932659adb49b94ec4f81db9b7a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Props1
+    second: {fileID: 2100000, guid: 588e9725ee215434f9499c16a240107f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tunnel
+    second: {fileID: 2100000, guid: 9d85d905f80f0ba489c790696fed3fe6, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
