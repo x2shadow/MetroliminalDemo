@@ -9087,7 +9087,7 @@ PrefabInstance:
         type: 3}
       propertyPath: musicTracks.Array.data[0].clip
       value: 
-      objectReference: {fileID: 8300000, guid: 2e7abff89b4f7ac47ac5b0a8f0c264ef, type: 3}
+      objectReference: {fileID: 8300000, guid: b713d70c2bf161143aab69754e6c910e, type: 3}
     - target: {fileID: 1794639928362885399, guid: 7d74fcee2ac4d8f45bd6014ffe8392ea,
         type: 3}
       propertyPath: soundEffects.Array.data[1].clip
@@ -19222,7 +19222,7 @@ PlayableDirector:
   m_Enabled: 1
   serializedVersion: 3
   m_PlayableAsset: {fileID: 11400000, guid: 5afcaefb857433940ae118227a7cba98, type: 2}
-  m_InitialState: 1
+  m_InitialState: 0
   m_WrapMode: 0
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
