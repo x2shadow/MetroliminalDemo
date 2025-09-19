@@ -9085,6 +9085,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1794639928362885399, guid: 7d74fcee2ac4d8f45bd6014ffe8392ea,
         type: 3}
+      propertyPath: musicTracks.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e7abff89b4f7ac47ac5b0a8f0c264ef, type: 3}
+    - target: {fileID: 1794639928362885399, guid: 7d74fcee2ac4d8f45bd6014ffe8392ea,
+        type: 3}
       propertyPath: soundEffects.Array.data[1].clip
       value: 
       objectReference: {fileID: 8300000, guid: 43bbca333f85a7d40a7b953c749fc8d5, type: 3}
