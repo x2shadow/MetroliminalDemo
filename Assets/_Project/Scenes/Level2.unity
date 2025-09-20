@@ -16167,12 +16167,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
+      propertyPath: m_Events.m_Events.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
       propertyPath: m_Events.m_Events.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2085029003}
     - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
+      propertyPath: m_Events.m_Events.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1498554009}
+    - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
       propertyPath: m_Events.m_Events.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
+      propertyPath: m_Events.m_Events.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
@@ -16183,6 +16198,11 @@ PrefabInstance:
     - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
       propertyPath: m_Events.m_Events.Array.data[5].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerSignalSetPosition, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
+      propertyPath: m_Events.m_Events.Array.data[5].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: PlayerSignalSetPosition, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3102523834244713490, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
@@ -16200,6 +16220,16 @@ PrefabInstance:
       propertyPath: position2
       value: 
       objectReference: {fileID: 756142671}
+    - target: {fileID: 4023895160065728565, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
+      propertyPath: playerCameraRoot
+      value: 
+      objectReference: {fileID: 587739541}
+    - target: {fileID: 4023895160065728565, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
+      propertyPath: playerCameraRoot2
+      value: 
+      objectReference: {fileID: 1951293687}
     - target: {fileID: 4595275436928129796, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
       propertyPath: moveSpeed
@@ -36588,6 +36618,12 @@ MonoBehaviour:
   AmplitudeGain: 2
   FrequencyGain: 1
   m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!1 &1498554009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6130646675694316278, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+    type: 3}
+  m_PrefabInstance: {fileID: 627079009}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1503198088
 GameObject:
   m_ObjectHideFlags: 0
@@ -48241,6 +48277,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 91.188, z: 0}
+--- !u!4 &1951293687 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 871869167971332720, guid: 89c6d6e7cfc5ee14ebe889d396e130e6,
+    type: 3}
+  m_PrefabInstance: {fileID: 167883567}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1958487071
 GameObject:
   m_ObjectHideFlags: 0
