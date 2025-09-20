@@ -32,23 +32,6 @@ MonoBehaviour:
   VirtualCamera:
     exposedName: 23b9819e6215a2c47bfe3393d1031c79
     defaultValue: {fileID: 0}
---- !u!114 &-8275127100331513571
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
-  m_Name: AudioPlayableAsset
-  m_EditorClassIdentifier: 
-  m_Clip: {fileID: 8300000, guid: 7e8e06f25c845d94f879f1fe76404c3b, type: 3}
-  m_Loop: 0
-  m_bufferingTime: 0.1
-  m_ClipProperties:
-    volume: 1
 --- !u!114 &-8071101436223411909
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,6 +63,23 @@ MonoBehaviour:
   m_Clips: []
   m_Markers:
     m_Objects: []
+--- !u!114 &-7823150778823647754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
+  m_Name: AudioPlayableAsset
+  m_EditorClassIdentifier: 
+  m_Clip: {fileID: 8300000, guid: fcdbb7a512bd4e94ebfb819f9e0bd4a6, type: 3}
+  m_Loop: 0
+  m_bufferingTime: 0.1
+  m_ClipProperties:
+    volume: 1
 --- !u!114 &-7694946600408998217
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1570,30 +1570,14 @@ MonoBehaviour:
   - {fileID: -7322096430762066893}
   - {fileID: 5368700996324368213}
   - {fileID: -3879871467481936158}
-  - {fileID: 1128346794204325072}
+  - {fileID: 608260307980434367}
   m_FixedDuration: 0
   m_EditorSettings:
     m_Framerate: 60
     m_ScenePreview: 1
   m_DurationMode: 0
   m_MarkerTrack: {fileID: 0}
---- !u!114 &981528414082604234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
-  m_Name: CinemachineShot(Clone)
-  m_EditorClassIdentifier: 
-  DisplayName: 
-  VirtualCamera:
-    exposedName: 660ddc83d78e66149a538801c0f43e89
-    defaultValue: {fileID: 0}
---- !u!114 &1128346794204325072
+--- !u!114 &608260307980434367
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1603,7 +1587,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b22792c3b570444eb18cb78c2af3a74, type: 3}
-  m_Name: Audio Track (1)
+  m_Name: Audio Track (2)
   m_EditorClassIdentifier: 
   m_Version: 3
   m_AnimClip: {fileID: 0}
@@ -1616,11 +1600,11 @@ MonoBehaviour:
   m_Clips:
   - m_Version: 1
     m_Start: 4.716666666666667
-    m_ClipIn: 0.38333333333333286
-    m_Asset: {fileID: -8275127100331513571}
-    m_Duration: 6.616666666666667
+    m_ClipIn: 0
+    m_Asset: {fileID: -7823150778823647754}
+    m_Duration: 3.500408163265306
     m_TimeScale: 1
-    m_ParentTrack: {fileID: 1128346794204325072}
+    m_ParentTrack: {fileID: 608260307980434367}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: -1
@@ -1682,13 +1666,29 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Screamer2
+    m_DisplayName: Screamer4
   m_Markers:
     m_Objects: []
   m_TrackProperties:
-    volume: 0.7
+    volume: 1
     stereoPan: 0
     spatialBlend: 0
+--- !u!114 &981528414082604234
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
+  m_Name: CinemachineShot(Clone)
+  m_EditorClassIdentifier: 
+  DisplayName: 
+  VirtualCamera:
+    exposedName: 660ddc83d78e66149a538801c0f43e89
+    defaultValue: {fileID: 0}
 --- !u!114 &1613610067593017489
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1999,25 +1999,7 @@ MonoBehaviour:
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
+      m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
