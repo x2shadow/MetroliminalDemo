@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - speaker: 0
-    text: "\u042D\u0441\u043A\u0430\u043B\u0430\u0442\u043E\u0440 \u043D\u0435 \u0440\u0430\u0431\u043E\u0442\u0430\u0435\u0442
-      - \u043E\u0442\u043B\u0438\u0447\u043D\u043E\u2026"
+    text: "The escalator is not working - great\u2026"
     voiceover: {fileID: 0}
     duration: 3

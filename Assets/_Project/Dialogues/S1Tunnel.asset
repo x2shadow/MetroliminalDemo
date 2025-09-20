@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - speaker: 0
-    text: "\u041D\u0443\u0436\u043D\u043E \u0432\u044B\u043B\u0435\u0437\u0430\u0442\u044C
-      \u0438\u0437 \u0442\u043E\u043D\u043D\u0435\u043B\u044F."
+    text: I need to get out of the tunnel.
     voiceover: {fileID: 0}
     duration: 3

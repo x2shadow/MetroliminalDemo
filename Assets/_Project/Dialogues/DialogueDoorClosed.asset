@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - speaker: 0
-    text: "\u0422\u0443\u0442 \u043C\u043D\u0435 \u043D\u0435 \u043F\u0440\u043E\u0439\u0442\u0438."
+    text: I can't go through here.
     voiceover: {fileID: 8300000, guid: 222a2dd8b2feab947aac80bfbec9e537, type: 3}
     duration: 2
