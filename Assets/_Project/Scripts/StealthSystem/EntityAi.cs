@@ -112,7 +112,8 @@ public class EntityAI : MonoBehaviour
     private bool materialsSwapped = false;
 
     // internals
-    private NavMeshAgent agent;
+    [HideInInspector]
+    public NavMeshAgent agent;
     private int patrolIndex = 0;
     private float lastSeenTime = -999f;
     private Coroutine dashCoroutine;
