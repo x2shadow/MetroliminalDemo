@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: "I won\u2019t get through without a key."
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 4e3ec0b5ac09af44e8d39948e8f96291, type: 3}
     duration: 2

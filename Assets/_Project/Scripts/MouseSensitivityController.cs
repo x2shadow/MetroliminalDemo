@@ -13,7 +13,7 @@ public class MouseSensitivityController : MonoBehaviour
     private void Start()
     {
         // Получаем сохранённое значение чувствительности или устанавливаем значение по умолчанию, например 100f
-        float savedSensitivity = PlayerPrefs.GetFloat(SensitivityPrefKey, 100f);
+        float savedSensitivity = PlayerPrefs.GetFloat(SensitivityPrefKey, 1f);
 
         // Применяем сохранённое значение к PlayerController
         if (playerController != null)

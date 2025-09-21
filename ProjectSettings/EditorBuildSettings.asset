@@ -29,10 +29,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Station 2.unity
     guid: 2298dabbd4d21414d9ddbdd9c8c34383
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Project/Scenes/Station 2 Old 2.unity
     guid: 3e249c313b0fb3948b557aa53b60f3bc
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Project/Scenes/Station 2 Old.unity
     guid: 0429efd373d3c5c408d799e0b9ac3bb0
   - enabled: 1

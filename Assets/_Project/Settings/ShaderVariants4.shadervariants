@@ -6,7 +6,7 @@ ShaderVariantCollection:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShaderVariants
+  m_Name: ShaderVariants4
   m_Shaders:
   - first: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
     second:
@@ -24,11 +24,6 @@ ShaderVariantCollection:
     second:
       variants:
       - keywords: _SUNDISK_SIMPLE
-        passType: 0
-  - first: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
-    second:
-      variants:
-      - keywords: 
         passType: 0
   - first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
     second:
@@ -94,11 +89,6 @@ ShaderVariantCollection:
       variants:
       - keywords: 
         passType: 0
-  - first: {fileID: 4800000, guid: 93446b5c5339d4f00b85c159e1159b7c, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
   - first: {fileID: 4800000, guid: 5f1864addb451f54bae8c86d230f736e, type: 3}
     second:
       variants:
@@ -108,8 +98,6 @@ ShaderVariantCollection:
     second:
       variants:
       - keywords: 
-        passType: 8
-      - keywords: INSTANCING_ON
         passType: 8
       - keywords: _CASTING_PUNCTUAL_LIGHT_SHADOW
         passType: 8
@@ -123,17 +111,11 @@ ShaderVariantCollection:
           _MAIN_LIGHT_SHADOWS _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
           _SURFACE_TYPE_TRANSPARENT
         passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHAPREMULTIPLY_ON
-          _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
-        passType: 13
       - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS
           _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
         passType: 13
       - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS
           _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION _SHADOWS_SOFT
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _REFLECTION_PROBE_BLENDING
-          _REFLECTION_PROBE_BOX_PROJECTION
         passType: 13
       - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
           _RECEIVE_SHADOWS_OFF _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
@@ -148,24 +130,6 @@ ShaderVariantCollection:
       - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
           _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION _SHADOWS_SOFT
         passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _RECEIVE_SHADOWS_OFF
-          _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _REFLECTION_PROBE_BLENDING
-          _REFLECTION_PROBE_BOX_PROJECTION
-        passType: 13
-  - first: {fileID: -6465566751694194690, guid: 9b4e681081e2b4c469111bb649e2f7ee,
-      type: 3}
-    second:
-      variants:
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _DECAL_NORMAL_BLEND_LOW
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _DECAL_NORMAL_BLEND_LOW
-          _MAIN_LIGHT_SHADOWS
-        passType: 13
-      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _DECAL_NORMAL_BLEND_LOW
-          _MAIN_LIGHT_SHADOWS _SHADOWS_SOFT
-        passType: 13
   - first: {fileID: 4800000, guid: 36e335017ad71d54fbb10842863188ae, type: 3}
     second:
       variants:
@@ -178,15 +142,8 @@ ShaderVariantCollection:
         passType: 0
   - first: {fileID: 4800000, guid: 2ad578ad3dc69864caad69cb3ebc9039, type: 3}
     second:
-      variants:
-      - keywords: 
-        passType: 13
+      variants: []
   - first: {fileID: 4800000, guid: 6cc37f589a3171847bd1dc6f9224ccf3, type: 3}
-    second:
-      variants:
-      - keywords: 
-        passType: 0
-  - first: {fileID: 4800000, guid: 0b3fbf35a693e2e42a255895e5be9dbd, type: 3}
     second:
       variants:
       - keywords: 

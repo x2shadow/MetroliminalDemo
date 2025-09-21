@@ -16,5 +16,5 @@ MonoBehaviour:
   - speaker: 0
     text: "Why are all the signs blank? What station is it? I don\u2019t recognise
       it."
-    voiceover: {fileID: 0}
-    duration: 4
+    voiceover: {fileID: 8300000, guid: 9a9cfa334397e3346b131b610afa547b, type: 3}
+    duration: 5

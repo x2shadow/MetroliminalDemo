@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: I need to find an exit. There should be green signs somewhere.
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 53441dbd1484158429af7fb1c68d02db, type: 3}
     duration: 4

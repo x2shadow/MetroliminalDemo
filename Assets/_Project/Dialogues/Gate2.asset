@@ -15,15 +15,15 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: "What the\u2026"
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 96055e4adf6cc9d47a71a2df38b7d3c6, type: 3}
     duration: 1
   - speaker: 0
     text: Why is the hermetic door closed?
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: a498961bccc4c8b43acbbe2e3ec93198, type: 3}
     duration: 3
   - speaker: 0
-    text: Now what the hell am i supposed to do?
-    voiceover: {fileID: 0}
+    text: Now what the hell am I supposed to do?
+    voiceover: {fileID: 8300000, guid: 4875dcd5c6acd724fa21e6153a3ad1f6, type: 3}
     duration: 3
   - speaker: 0
     text: '
@@ -33,9 +33,9 @@ MonoBehaviour:
     duration: 1
   - speaker: 0
     text: Is that a train?
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 4a42a7576ecc35b429651d6b510139b2, type: 3}
     duration: 3
   - speaker: 0
     text: Here is my chance!
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 39d85457d16867140a94338c54ed10b1, type: 3}
     duration: 3

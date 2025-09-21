@@ -15,7 +15,7 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: "I shouldn\u2019t jump."
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 65fb937fe04d8684ea63aec52dea7c79, type: 3}
     duration: 2
   - speaker: 0
     text: There still might be running trains on the way.

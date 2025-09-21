@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        float savedSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 30f);
+        float savedSensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 1f);
         mouseSensitivity = savedSensitivity;
 
         Cursor.lockState = CursorLockMode.Locked;

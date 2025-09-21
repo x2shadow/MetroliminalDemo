@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: "I can\u2019t let her notice me."
-    voiceover: {fileID: 0}
-    duration: 1
+    voiceover: {fileID: 8300000, guid: 2d49128010a977b4cba1074acd65e8d0, type: 3}
+    duration: 2

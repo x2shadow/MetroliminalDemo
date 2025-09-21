@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: Locked.
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: f3775c62e4aa8c842a97301e46a6f47f, type: 3}
     duration: 2

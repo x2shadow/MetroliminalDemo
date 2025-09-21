@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: "The escalator is not working - great\u2026"
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 3575a3c87f1c6674394d75abd38ecee6, type: 3}
     duration: 3

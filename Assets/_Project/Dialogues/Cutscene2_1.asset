@@ -15,34 +15,34 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: "No escape\u2026 From her\u2026"
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 640cd9623a80a724595f7afd4616f34b, type: 3}
     duration: 3
   - speaker: 0
     text: "No one\u2026 Escaped\u2026"
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: fc5166dabb5ba6a4397ae13ac8282f81, type: 3}
     duration: 2
   - speaker: 0
     text: "Might it be our divine retribution? Finally upon us\u2026 For the sins
       we made."
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 5ab8fb3378cea8848b1c3ab3999b2c06, type: 3}
     duration: 5
   - speaker: 0
     text: SHE hears everything after all, EVERYTHING.
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: f2b1f3fca2849df48aa9532094d1c404, type: 3}
     duration: 3
   - speaker: 0
     text: What are you saying? What was that thing?
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 7dce73bb4cb536f44b29824890aeb306, type: 3}
     duration: 2
   - speaker: 0
     text: You may try your luck but...
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: a4050d17b05eb3445b6b5d360b95dc9a, type: 3}
     duration: 2.5
   - speaker: 0
     text: "As for me\u2026 My dears are waiting for me."
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 16ae87e143e0e68418262266bb022f86, type: 3}
     duration: 4
   - speaker: 0
     text: "WAIT, DON\u2019T DO I-"
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: f6c5f0ed4c663994f890246f7e1f69e4, type: 3}
     duration: 2

@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: I need to get out of the tunnel.
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 55a7ccd8251f2fb4f962ec3361837ec6, type: 3}
     duration: 3

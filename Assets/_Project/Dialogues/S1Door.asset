@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: This door is unlocked, lucky me.
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: d1697669aa45e9849bde8cead1fcb398, type: 3}
     duration: 3

@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: What the hell! Are those gunshots?!
-    voiceover: {fileID: 0}
-    duration: 1
+    voiceover: {fileID: 8300000, guid: c9f2fd469104662419a1220f796cf859, type: 3}
+    duration: 2.5

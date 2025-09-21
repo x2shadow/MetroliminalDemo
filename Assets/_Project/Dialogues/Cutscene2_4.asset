@@ -15,5 +15,5 @@ MonoBehaviour:
   lines:
   - speaker: 0
     text: Oh, shit!
-    voiceover: {fileID: 0}
+    voiceover: {fileID: 8300000, guid: 479a804c5cffdbb48b09a661cb9e9e10, type: 3}
     duration: 1
