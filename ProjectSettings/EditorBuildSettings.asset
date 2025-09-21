@@ -27,6 +27,9 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Gateway.unity
     guid: 24f97576fd8eb1143bc4c66d79f97717
   - enabled: 1
+    path: Assets/_Project/Scenes/Station 2.unity
+    guid: 2298dabbd4d21414d9ddbdd9c8c34383
+  - enabled: 1
     path: Assets/_Project/Scenes/Station 2 Old 2.unity
     guid: 3e249c313b0fb3948b557aa53b60f3bc
   - enabled: 1
