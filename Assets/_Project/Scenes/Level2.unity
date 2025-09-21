@@ -977,7 +977,7 @@ GameObject:
   - component: {fileID: 25394623}
   - component: {fileID: 25394625}
   - component: {fileID: 25394624}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: KeyMark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3684,7 +3684,7 @@ GameObject:
   - component: {fileID: 115154482}
   - component: {fileID: 115154481}
   - component: {fileID: 115154480}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16268,6 +16268,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2066581343432293984, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2354116375016575509, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16446,13 +16451,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4595275436928129796, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
+      propertyPath: playerMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595275436928129796, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
       propertyPath: crouchTransitionSpeed
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 6130646675694316278, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6362852853393563219, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6571271851720408740, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6656877723889601223, guid: 1cac9b5e0141d454cb645ffe5b8b938f,
         type: 3}
@@ -21077,7 +21097,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801629955}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -24528,7 +24548,7 @@ GameObject:
   - component: {fileID: 904575619}
   - component: {fileID: 904575621}
   - component: {fileID: 904575620}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: StationFloor (41)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30406,7 +30426,7 @@ GameObject:
   - component: {fileID: 1200329817}
   - component: {fileID: 1200329819}
   - component: {fileID: 1200329818}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Platform (25)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35935,7 +35955,7 @@ GameObject:
   - component: {fileID: 1473617622}
   - component: {fileID: 1473617625}
   - component: {fileID: 1473617626}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Keys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36028,8 +36048,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.0024633962, y: 0.002533777, z: 0.0010887946}
-  m_Center: {x: -0.0006665336, y: 0.00015831474, z: 0.00043577247}
+  m_Size: {x: 0.0024633962, y: 0.002533777, z: 0.013486884}
+  m_Center: {x: -0.0006665338, y: 0.00015831474, z: 0.0066348156}
 --- !u!114 &1473617626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38310,7 +38330,7 @@ GameObject:
   - component: {fileID: 1564826896}
   - component: {fileID: 1564826895}
   - component: {fileID: 1564826897}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: KeysAnim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38456,7 +38476,7 @@ GameObject:
   - component: {fileID: 1565645186}
   - component: {fileID: 1565645188}
   - component: {fileID: 1565645187}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41672,7 +41692,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

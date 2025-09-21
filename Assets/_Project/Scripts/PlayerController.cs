@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Interaction Settings")]
+    public LayerMask playerMask;
+
     [Header("Настройки движения")]
     public float moveSpeed = 5f;
     public float mouseSensitivity = 1.0f;
@@ -320,7 +323,8 @@ public class PlayerController : MonoBehaviour
         interactPromptUI.SetActive(false);
 
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactMask | obstacleMask))
+        //if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactMask | obstacleMask))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, (interactMask | obstacleMask) & ~playerMask)) // Исключаем слой игрока
         {
             currentInteractable = hit.collider.GetComponent<IInteractable>();
 
