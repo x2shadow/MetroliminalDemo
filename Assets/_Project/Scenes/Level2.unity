@@ -56883,6 +56883,36 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8762892365183416448, guid: 3aa5022a514eecb47ade39430c11b0dc,
+        type: 3}
+      propertyPath: m_Range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762892365183416448, guid: 3aa5022a514eecb47ade39430c11b0dc,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.8156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762892365183416448, guid: 3aa5022a514eecb47ade39430c11b0dc,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.99607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762892365183416448, guid: 3aa5022a514eecb47ade39430c11b0dc,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762892365183416448, guid: 3aa5022a514eecb47ade39430c11b0dc,
+        type: 3}
+      propertyPath: m_SpotAngle
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 8762892365183416448, guid: 3aa5022a514eecb47ade39430c11b0dc,
+        type: 3}
+      propertyPath: m_InnerSpotAngle
+      value: 26
+      objectReference: {fileID: 0}
     - target: {fileID: 8962097080677376685, guid: 3aa5022a514eecb47ade39430c11b0dc,
         type: 3}
       propertyPath: m_LocalPosition.x
