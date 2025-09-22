@@ -19370,7 +19370,7 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: caa3e6d6425cfa045bce7f9e5b841e72, type: 2}
+      objectReference: {fileID: 2100000, guid: 99ede657d2f7da34b92409244d6493e2, type: 2}
     - target: {fileID: 3115953165249485407, guid: 90c4e8e1a92569c4e99a0a5c15fef213,
         type: 3}
       propertyPath: chaseDashDistance
@@ -19563,6 +19563,11 @@ PrefabInstance:
       propertyPath: m_ExposedReferences.m_References.Array.data[3].second
       value: 
       objectReference: {fileID: 1613468728}
+    - target: {fileID: 8434196244826036861, guid: 90c4e8e1a92569c4e99a0a5c15fef213,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 99ede657d2f7da34b92409244d6493e2, type: 2}
     - target: {fileID: 8726681290837057829, guid: 90c4e8e1a92569c4e99a0a5c15fef213,
         type: 3}
       propertyPath: Lens.NearClipPlane
@@ -52065,7 +52070,7 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: caa3e6d6425cfa045bce7f9e5b841e72, type: 2}
+      objectReference: {fileID: 2100000, guid: 99ede657d2f7da34b92409244d6493e2, type: 2}
     - target: {fileID: 3115953165249485407, guid: 90c4e8e1a92569c4e99a0a5c15fef213,
         type: 3}
       propertyPath: chaseDashDistance
@@ -52271,6 +52276,11 @@ PrefabInstance:
       propertyPath: m_ExposedReferences.m_References.Array.data[3].second
       value: 
       objectReference: {fileID: 1137985835}
+    - target: {fileID: 8434196244826036861, guid: 90c4e8e1a92569c4e99a0a5c15fef213,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 99ede657d2f7da34b92409244d6493e2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
