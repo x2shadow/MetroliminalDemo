@@ -26,8 +26,8 @@ public class AudioManager : MonoBehaviour
 
     private Dictionary<string, Sound> soundDictionary = new Dictionary<string, Sound>();
     private Queue<AudioSource> soundPool = new Queue<AudioSource>();
-    private float masterMusicVolume = 1f;
-    private float masterSoundVolume = 1f;
+    private float masterMusicVolume = 0.5f;
+    private float masterSoundVolume = 0.5f;
     private Sound currentMusicTrack;
 
     void Awake()
