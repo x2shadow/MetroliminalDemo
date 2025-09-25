@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6dd1e3410f96104f8d1987f7d745f0b, type: 3}
+  m_Name: DialogueDoorOpensWithKey
+  m_EditorClassIdentifier: 
+  lines:
+  - speaker: 0
+    text: "I won\u2019t get through without a key."
+    voiceover: {fileID: 8300000, guid: 4e3ec0b5ac09af44e8d39948e8f96291, type: 3}
+    duration: 2
